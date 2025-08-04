@@ -1,25 +1,129 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
+//contracts
+import ContractList from './Listes/ContractList';
+import AddContract from './Creates/AddContract';
+import EditContract from './Updates/EditContract';
+
+
+//clients
+import ClientList from './Listes/ClientList';
+import CreateClient from './Creates/CreateClient';
+import UpdateClient from './Updates/UpdateClient';
+// import Navbar from './Component/Navbar';
+
+//suppliers
+import SupplierList from './Listes/SupplierList';
+import CreateSupplier from './Creates/CreateSupplier';
+import UpdateSupplier from './Updates/UpdateSupplier';
+
+//purchase order
+import PurchaseOrderList from './Listes/PurchaseOrderList';
+import CreatePurchaseOrder from './Creates/CreatePurchaseOrder';
+import UpdatePurchaseOrder from './Updates/UpdatePurchaseOrder';
+import Purchaseorder from './Listes/ViewsOnly/purchaseorder(requests)';
+
+
+//purchase order
+import SupplyOrderList from './Listes/SupplyOrderList';
+import CreateSupplyOrder from './Creates/CreateSupplyOrder';
+import UpdateSupplyOrder from './Updates/UpdateSupplyOrder';
+
+//Dashboards
+import ProcurementDashboard from './Dashboards/ProcurementsDash';
+import OperationDash from './Dashboards/OperationDash';
+import OnlyviewContract from './Listes/ViewsOnly/OnlyviewContract';
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* Internal CSS */}
+      <style>
+        {`
+          body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+          }
+
+          .navbar {
+            background-color: #1e3a8a;
+            padding: 1rem;
+            color: white;
+            text-align: center;
+            font-size: 1.5rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+          }
+
+          .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+          }
+
+          .navbar a:hover {
+            text-decoration: underline;
+          }
+
+          .app-container {
+            padding: 100px 20px 20px; /* Top padding accounts for fixed navbar */
+          }
+        `}
+      </style>
+
+      <Router>
+        <div className="app-container">
+          <Routes>
+
+            {/* Contract */}
+
+            <Route path="/" element={<ContractList />} />
+            <Route path="/contracts/create" element={<AddContract />} />
+            <Route path="/contracts/update/:id" element={<EditContract />} />
+            <Route path="/contracts/List" element={<ContractList/>} />
+            <Route path="/contractviewonly" element={<OnlyviewContract/>} />
+
+
+            {/* Clients */}
+
+            <Route path="/clients/create" element={<CreateClient />} />
+            <Route path="/clients/List" element={<ClientList />} />
+            <Route path="/clients/update/:id" element={<UpdateClient />} />
+
+            {/* Suppliers */}
+            <Route path="/supliers/create" element={< CreateSupplier/>} />
+            <Route path="/suppliers/List" element={<SupplierList />} />
+            <Route path="/suppliers/update/:id" element={<UpdateSupplier />} />
+
+            {/* Purchase order */}
+            <Route path="/purchaseorder/create" element={< CreatePurchaseOrder/>} />
+            <Route path="/purchaseorder/List" element={<PurchaseOrderList />} />
+            <Route path="/purchaseorder/update/:id" element={<UpdatePurchaseOrder />} />
+            <Route path="/purchaseorderOnly" element={<Purchaseorder />} />
+
+            {/* Supply order */}
+            <Route path="/supplieorder/create" element={< CreateSupplyOrder/>} />
+            <Route path="/supplieorder/List" element={<SupplyOrderList />} />
+            <Route path="/supplieorder/update/:id" element={<UpdateSupplyOrder />} />
+
+            {/*dashboards*/}
+            <Route path="/procDash" element={<ProcurementDashboard  />} />
+            <Route path="/operacDash" element={<OperationDash />} />
+
+          </Routes>
+        </div>
+      </Router>
+      
     </div>
+    
   );
-}
+};
 
 export default App;
