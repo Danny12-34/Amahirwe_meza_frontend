@@ -25,7 +25,7 @@ import UpdatePurchaseOrder from './Updates/UpdatePurchaseOrder';
 import Purchaseorder from './Listes/ViewsOnly/purchaseorder(requests)';
 
 
-//purchase order
+//SuppliesOrder
 import SupplyOrderList from './Listes/SupplyOrderList';
 import CreateSupplyOrder from './Creates/CreateSupplyOrder';
 import UpdateSupplyOrder from './Updates/UpdateSupplyOrder';
@@ -33,6 +33,7 @@ import UpdateSupplyOrder from './Updates/UpdateSupplyOrder';
 //Dashboards
 import ProcurementDashboard from './Dashboards/ProcurementsDash';
 import OperationDash from './Dashboards/OperationDash';
+import MDdash from './Dashboards/MDdash';
 import OnlyviewContract from './Listes/ViewsOnly/OnlyviewContract';
 
 const App = () => {
@@ -116,6 +117,7 @@ const App = () => {
             {/*dashboards*/}
             <Route path="/procDash" element={<ProcurementDashboard  />} />
             <Route path="/operacDash" element={<OperationDash />} />
+            <Route path="/MD_Dash" element={<MDdash />} />
 
           </Routes>
         </div>

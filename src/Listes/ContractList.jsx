@@ -113,42 +113,49 @@ const ContractList = () => {
         doc.text(label, marginLeft + 4, y + 24 + i * 6);
     });
 
-    // Column 2: Product Summary
+    // Column 2: Product Summary with P IDs
     const productX = marginLeft + columnWidth + columnGap;
     const productMap = {};
+
     filteredContracts.forEach(contract => {
         const product = contract.DescriptionOfGood || 'Unknown';
-        const quantity = parseInt(contract.Quantity || 0, 10);
-        productMap[product] = (productMap[product] || 0) + quantity;
+        const id = contract.Quantity || contract.Quantity || 'N/A'; // Adjust ID field as needed
+        if (!productMap[product]) {
+            productMap[product] = [];
+        }
+        productMap[product].push(id);
     });
 
+    const productBoxHeight = 46 + Object.keys(productMap).length * 6;
+
     doc.setFillColor(254, 242, 242); // Light red/pink
-    doc.roundedRect(productX - 2, y, columnWidth, 46, 4, 4, 'F');
+    doc.roundedRect(productX - 2, y, columnWidth, productBoxHeight, 4, 4, 'F');
 
     doc.setTextColor(74, 20, 140); // Deep Purple
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
     doc.text('Product Summary:', productX, y + 8);
 
-    doc.setFontSize(13);
+    doc.setFontSize(11);
     doc.setFont('helvetica', 'normal');
     const products = Object.entries(productMap);
-    products.forEach(([product, qty], i) => {
-        doc.text(`• ${product}: ${qty}`, productX + 4, y + 14 + i * 6);
+    products.forEach(([product, Quantity], i) => {
+        const label = `• ${product}: Product IDs: ${Quantity.join(', ')}`;
+        doc.text(label, productX + 4, y + 14 + i * 6);
     });
 
-    const bottomY = y + 52;
+    const bottomY = y + 52 + products.length * 6;
 
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 0, 0);
     doc.text(`Total Products: ${products.length}`, productX, bottomY);
 
     // Table Section
-    const headers = [['Client', 'Product', 'Qty', 'Contract Date', 'Deadline', 'Status']];
+    const headers = [['Client', 'Product', 'IDs', 'Contract Date', 'Deadline', 'Status']];
     const data = filteredContracts.map(contract => [
         contract.Client_Name || '',
         contract.DescriptionOfGood || '',
-        contract.Quantity?.toString() || '',
+        (contract.id || contract.Quantity|| '').toString(),
         formatDate(contract.Contract_Date),
         formatDate(contract.Delivery_deadline),
         contract.Status || '',
@@ -174,10 +181,9 @@ const ContractList = () => {
 
     // Footer
     const pageHeight = doc.internal.pageSize.height;
-    
+
     doc.setTextColor(100);
     doc.setFontSize(10);
-    // Add generated on date above the end line
     doc.text(`Generated on: ${formatDate(today)}`, marginLeft, pageHeight - 18);
 
     doc.setFontSize(9);
@@ -185,6 +191,7 @@ const ContractList = () => {
 
     doc.save('Contracts_Report.pdf');
 };
+
 
 
 
@@ -480,8 +487,8 @@ const ContractList = () => {
                     <thead>
                         <tr>
                             <th>Client Name</th>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
+                            <th>Contract Number</th>
+                            <th>Contract Description</th>                            
                             <th>Contract Date</th>
                             <th>Deadline Date</th>
                             <th>Status</th>
@@ -494,8 +501,8 @@ const ContractList = () => {
                             currentContracts.map((contract) => (
                                 <tr key={contract.ContractId}>
                                     <td>{contract.Client_Name}</td>
-                                    <td>{contract.DescriptionOfGood}</td>
                                     <td>{contract.Quantity}</td>
+                                    <td>{contract.DescriptionOfGood}</td>                                    
                                     <td>{formatDateUTC(contract.Contract_Date)}</td>
                                     <td>{formatDateUTC(contract.Delivery_deadline)}</td>
                                     <td style={{ color: getStatusColor(contract.Status), fontWeight: 'bold' }}>

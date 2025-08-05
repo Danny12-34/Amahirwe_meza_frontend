@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ProcurementNavbar from '../Component/ProcurementNavbar';
 
 const CreatePurchaseOrder = () => {
   const [form, setForm] = useState({
@@ -29,15 +30,16 @@ const CreatePurchaseOrder = () => {
 
   return (
     <div className="form-wrapper">
+      <ProcurementNavbar />
       <style>{`
         .form-wrapper {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          font-family: 'Segoe UI', sans-serif;
-          background-color: #f1f5f9;
-          padding-top: 100%;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         min-height: 100vh;
+         font-family: 'Segoe UI', sans-serif;
+         background-color: #f1f5f9;
+         padding-top: 30%; /* <-- THIS IS THE PROBLEM */
         }
         .form-container {
           background: white;
