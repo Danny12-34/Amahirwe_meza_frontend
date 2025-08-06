@@ -35,6 +35,14 @@ import ProcurementDashboard from './Dashboards/ProcurementsDash';
 import OperationDash from './Dashboards/OperationDash';
 import MDdash from './Dashboards/MDdash';
 import OnlyviewContract from './Listes/ViewsOnly/OnlyviewContract';
+import FieldChiefDashboard from './Dashboards/FieldChiefDashboard';
+
+//Field Chief
+import CashRequest from './Creates/CashRequest';
+import CashRequestList from './Listes/CashRequestList';
+import EstimationList from './Listes/EstimationList';
+import CreateEstimation from './Creates/CreateEstimation';
+import EstimationEdit from './Updates/EstimationEdit';
 
 const App = () => {
   return (
@@ -118,6 +126,16 @@ const App = () => {
             <Route path="/procDash" element={<ProcurementDashboard  />} />
             <Route path="/operacDash" element={<OperationDash />} />
             <Route path="/MD_Dash" element={<MDdash />} />
+            <Route path="/FC_Dash" element={<FieldChiefDashboard />} />
+
+            {/* FIELD CHIEF */}
+
+            <Route path="/CashRequest/create" element={< CashRequest/>} />
+            <Route path="/CashRequest/List" element={<CashRequestList/>} />
+            <Route path="/Estimation/List" element={<EstimationList/>} />
+            <Route path="/Estimation/create" element={<CreateEstimation/>} />
+            <Route path="/estimation/update/:id" element={<EstimationEdit/>} />
+
 
           </Routes>
         </div>

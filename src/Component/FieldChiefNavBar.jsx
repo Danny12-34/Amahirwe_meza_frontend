@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../images/Logo/image.png';
 
+
 const ProcurementNavbar = () => {
   return (
     <>
@@ -11,7 +12,7 @@ const ProcurementNavbar = () => {
           top: 0;
           left: 0;
           width: 100%;
-          background: linear-gradient(135deg, #050394ff, #1cc50d);
+          background: linear-gradient(135deg, #039422ff, #0f04a0ff);
           color: white;
           padding: 14px 30px;
           display: flex;
@@ -35,7 +36,7 @@ const ProcurementNavbar = () => {
           text-shadow: 1.5px 1.5px 4px rgba(0,0,0,0.3);
           display: flex;
           align-items: center;
-          gap: 1px;
+          gap: 10px;
           cursor: default;
           
         }
@@ -91,18 +92,20 @@ const ProcurementNavbar = () => {
       `}</style>
 
       <div className="navbar">
+        
         <div className="logo">
           <img src={logoImg} alt="Logo" />
           AMAHIRWE MEZA Ltd
         </div>
         <nav className="nav-links">
-          <Link to="/procDash">Dashboard</Link>
-          <Link to="/purchaseorder/List">view Purchase Order</Link>
+          <Link to="/FC_Dash">Dashboard</Link>
+          <Link to="/purchaseorderOnly">view Purchase Order</Link>
           <Link to="/suppliers/List">view Supplier</Link>
-          <Link to="/contracts/List">view All Contract</Link>
-          <Link to="/MD_Dash">M.D</Link>
-          <Link to="/FC_Dash">Field Chief</Link>
-          <Link to="/operacDash">Operation</Link>
+          <Link to="/CashRequest/List">Cash Request</Link>
+          <Link to="/Estimation/List">Estimation</Link>
+          <Link to="/contractviewonly">view All Contract</Link>
+          <Link to="/contracts/List">Logout</Link>
+          
         </nav>
       </div>
     </>
@@ -110,3 +113,4 @@ const ProcurementNavbar = () => {
 };
 
 export default ProcurementNavbar;
+ 
