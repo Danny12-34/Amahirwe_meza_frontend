@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import API from '../api'; // Make sure this points to your axios instance
+import API from '../api';
 import { useNavigate } from 'react-router-dom';
+import ProcurementNavbar from '../Component/ProcurementNavbar';
 
 const AddContract = () => {
   const [form, setForm] = useState({
     Client_Name: '',
     DescriptionOfGood: '',
+    Amount_category: '',
     Quantity: '',
     Delivery_location: '',
     Delivery_deadline: '',
@@ -34,23 +36,17 @@ const AddContract = () => {
     }
 
     const formData = new FormData();
-
-    // Append form fields
     Object.entries(form).forEach(([key, value]) => {
-      if(value) formData.append(key, value);
+      if (value) formData.append(key, value);
     });
-
-    // Append PDF file
     formData.append('contractFile', pdfFile);
 
     try {
       await API.post('/contracts/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Contract created successfully!');
-      navigate('/'); // Redirect to homepage or contracts list
+      navigate('/');
     } catch (error) {
       console.error('Upload error:', error);
       alert('Failed to create contract. Please try again.');
@@ -58,151 +54,193 @@ const AddContract = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h2 style={styles.title}>Create New Contract</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
+    <div style={styles.page}>
+      <ProcurementNavbar />
+      <div style={styles.wrapper}>
+        <div style={styles.card}>
+          <h2 style={styles.title}>📄 Create New Contract</h2>
+          <form onSubmit={handleSubmit} style={styles.form}>
 
-          <input
-            type="text"
-            name="Client_Name"
-            placeholder="Client Name"
-            style={styles.input}
-            value={form.Client_Name}
-            onChange={handleChange}
-            required
-          />
+            <input
+              type="text"
+              name="Client_Name"
+              placeholder="Client Name"
+              style={styles.input}
+              value={form.Client_Name}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            type="text"
-            name="DescriptionOfGood"
-            placeholder="Description of Goods"
-            style={styles.input}
-            value={form.DescriptionOfGood}
-            onChange={handleChange}
-            required
-          />
+            <input
+              type="text"
+              name="DescriptionOfGood"
+              placeholder="Description of Goods"
+              style={styles.input}
+              value={form.DescriptionOfGood}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            type="number"
-            name="Quantity"
-            placeholder="Quantity"
-            style={styles.input}
-            value={form.Quantity}
-            onChange={handleChange}
-            required
-          />
+            <input
+              type="text"
+              name="Amount_category"
+              placeholder="Amount/Category"
+              style={styles.input}
+              value={form.Amount_category}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            type="text"
-            name="Delivery_location"
-            placeholder="Delivery Location"
-            style={styles.input}
-            value={form.Delivery_location}
-            onChange={handleChange}
-          />
+            <input
+              type="number"
+              name="Quantity"
+              placeholder="Contract Number"
+              style={styles.input}
+              value={form.Quantity}
+              onChange={handleChange}
+              required
+            />
 
-          <input
-            type="date"
-            name="Delivery_deadline"
-            style={styles.input}
-            value={form.Delivery_deadline}
-            onChange={handleChange}
-          />
+            <input
+              type="text"
+              name="Delivery_location"
+              placeholder="Delivery Location"
+              style={styles.input}
+              value={form.Delivery_location}
+              onChange={handleChange}
+            />
 
-          <input
-            type="date"
-            name="Contract_Date"
-            style={styles.input}
-            value={form.Contract_Date}
-            onChange={handleChange}
-          />
+            {/* Labeled Delivery Deadline */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <label htmlFor="Delivery_deadline" style={styles.label}>Delivery Deadline</label>
+              <input
+                type="date"
+                id="Delivery_deadline"
+                name="Delivery_deadline"
+                style={styles.input}
+                value={form.Delivery_deadline}
+                onChange={handleChange}
+              />
+            </div>
 
-          {/* <select
-            name="Status"
-            style={styles.input}
-            value={form.Status}
-            onChange={handleChange}
-          >
-            <option value="In progress">In progress</option>
-            <option value="Complete">Complete</option>
-            <option value="Cancelled">Cancelled</option>
-          </select> */}
+            {/* Labeled Contract Date */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <label htmlFor="Contract_Date" style={styles.label}>Contract Date</label>
+              <input
+                type="date"
+                id="Contract_Date"
+                name="Contract_Date"
+                style={styles.input}
+                value={form.Contract_Date}
+                onChange={handleChange}
+              />
+            </div>
 
-          <input
-            type="text"
-            name="Created_by"
-            placeholder="Created By"
-            style={styles.input}
-            value={form.Created_by}
-            onChange={handleChange}
-          />
+            <input
+              type="text"
+              name="Created_by"
+              placeholder="Created By"
+              style={styles.input}
+              value={form.Created_by}
+              onChange={handleChange}
+            />
 
-          <input
-            type="file"
-            accept="application/pdf"
-            onChange={handleFileChange}
-            style={styles.input}
-            required
-          />
+            <label style={styles.fileLabel}>
+              Upload Contract (PDF)
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleFileChange}
+                style={styles.fileInput}
+                required
+              />
+            </label>
 
-          <div style={{ gridColumn: 'span 2', textAlign: 'center' }}>
-            <button type="submit" style={styles.button}>
-              Save Contract
-            </button>
-          </div>
-
-        </form>
+            <div style={styles.buttonWrapper}>
+              <button type="submit" style={styles.button}>💾 Save Contract</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
 };
 
 const styles = {
-  container: {
+  page: {
+    background: 'linear-gradient(to right, #aaa5fcff, #3005f1ff)',
     minHeight: '100vh',
-    display: 'flex',    
+    paddingTop: '20px',
+  },
+  wrapper: {
+    display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#55b7f8ff',
+    padding: '20px',
   },
   card: {
-    width: '100%',
-    maxWidth: '800px',
-    backgroundColor: '#ffffff',
-    borderRadius: '12px',
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    background: '#fff',
+    borderRadius: '16px',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
     padding: '40px',
+    maxWidth: '900px',
+    width: '100%',
+    animation: 'fadeIn 0.5s ease-in-out',
   },
   title: {
     fontSize: '28px',
     fontWeight: 'bold',
     color: '#1e3a8a',
-    marginBottom: '24px',
+    marginBottom: '25px',
     textAlign: 'center',
   },
   form: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '20px',
   },
   input: {
-    padding: '10px 14px',
-    borderRadius: '6px',
+    padding: '12px 16px',
+    borderRadius: '8px',
     border: '1px solid #ccc',
     fontSize: '16px',
     outline: 'none',
+    transition: 'all 0.3s ease',
+  },
+  label: {
+    marginBottom: '6px',
+    fontWeight: '600',
+    color: '#1e3a8a',
+    fontSize: '14px',
+  },
+  fileLabel: {
+    gridColumn: 'span 2',
+    padding: '12px 16px',
+    borderRadius: '8px',
+    background: '#f1f5f9',
+    border: '1px dashed #2563eb',
+    textAlign: 'center',
+    cursor: 'pointer',
+    fontSize: '16px',
+    color: '#2563eb',
+    fontWeight: 'bold',
+  },
+  fileInput: {
+    display: 'none',
+  },
+  buttonWrapper: {
+    gridColumn: 'span 2',
+    textAlign: 'center',
   },
   button: {
-    backgroundColor: '#2563eb',
-    color: '#ffffff', 
-    padding: '10px 20px',
+    background: 'linear-gradient(to right, #2563eb, #1e40af)',
+    color: '#fff',
+    padding: '12px 24px',
     fontSize: '16px',
     border: 'none',
     borderRadius: '8px',
     cursor: 'pointer',
-    transition: 'background-color 0.3s',
-  }
+    transition: 'transform 0.2s ease, background 0.3s ease',
+  },
 };
 
 export default AddContract;

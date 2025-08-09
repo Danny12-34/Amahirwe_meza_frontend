@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ProcurementNavbar from '../Component/ProcurementNavbar';
 
 const CreateSupplier = () => {
   const [form, setForm] = useState({
@@ -27,7 +28,7 @@ const CreateSupplier = () => {
       const res = await axios.post('http://localhost:8000/api/v1/suppliers/create', form);
       if (res.status === 201 || res.status === 200) {
         alert('Supplier created successfully');
-        navigate('/suppliers');
+        navigate('/suppliers/List');
       }
     } catch (error) {
       console.error('Error creating supplier:', error);
@@ -37,6 +38,7 @@ const CreateSupplier = () => {
 
   return (
     <div className="container">
+      <ProcurementNavbar/>
       <style>{`
         .container {
           max-width: 800px;
@@ -154,7 +156,7 @@ const CreateSupplier = () => {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Registration Number</label>
           <input
             type="text"
@@ -163,7 +165,7 @@ const CreateSupplier = () => {
             value={form.Registration_number}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label>Product Category</label>

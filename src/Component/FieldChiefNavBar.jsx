@@ -99,11 +99,13 @@ const ProcurementNavbar = () => {
         </div>
         <nav className="nav-links">
           <Link to="/FC_Dash">Dashboard</Link>
-          <Link to="/purchaseorderOnly">view Purchase Order</Link>
-          <Link to="/suppliers/List">view Supplier</Link>
+          <Link to="/purchaseorderOnlyField">P.O</Link>
+          <Link to="/suppliers/Listfield">Supplier</Link>
           <Link to="/CashRequest/List">Cash Request</Link>
           <Link to="/Estimation/List">Estimation</Link>
-          <Link to="/contractviewonly">view All Contract</Link>
+          <Link to="/contractviewonlyField">Contract</Link>
+          <Link to="/comewith/create">Documents</Link>
+          <Link to="/Trash/create">CLass Marks</Link>
           <Link to="/contracts/List">Logout</Link>
           
         </nav>

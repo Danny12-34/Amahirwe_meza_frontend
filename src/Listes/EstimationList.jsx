@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable'; // This import is essential for `autoTable`
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import FieldChiefNavBar from '../Component/FieldChiefNavBar';
 import autoTable from "jspdf-autotable";
 
 import {
@@ -128,7 +128,7 @@ const EstimationList = () => {
 
   return (
     <div className="container">
-      <ProcurementNavbar />
+      <FieldChiefNavBar />
       <style>{`
         .container { padding: 1rem; font-family: 'Segoe UI'; }
         .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; }

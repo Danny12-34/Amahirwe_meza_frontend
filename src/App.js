@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ContractList from './Listes/ContractList';
 import AddContract from './Creates/AddContract';
 import EditContract from './Updates/EditContract';
+import OnlyviewContract_field from './Listes/ViewsOnly/OnlyviewContract_field';
 
 
 //clients
@@ -16,13 +17,15 @@ import UpdateClient from './Updates/UpdateClient';
 //suppliers
 import SupplierList from './Listes/SupplierList';
 import CreateSupplier from './Creates/CreateSupplier';
+import SupplierLstViewOnlyField from './Listes/ViewsOnly/SupplierListViewOnlyField';
 import UpdateSupplier from './Updates/UpdateSupplier';
-
+import SupplierLstViewOnly from './Listes/ViewsOnly/SupplierListViewOnly';
 //purchase order
 import PurchaseOrderList from './Listes/PurchaseOrderList';
 import CreatePurchaseOrder from './Creates/CreatePurchaseOrder';
 import UpdatePurchaseOrder from './Updates/UpdatePurchaseOrder';
 import Purchaseorder from './Listes/ViewsOnly/purchaseorder(requests)';
+import  PurchaseOrderListField from './Listes/ViewsOnly/PurchaseOrderListField';
 
 
 //SuppliesOrder
@@ -43,6 +46,8 @@ import CashRequestList from './Listes/CashRequestList';
 import EstimationList from './Listes/EstimationList';
 import CreateEstimation from './Creates/CreateEstimation';
 import EstimationEdit from './Updates/EstimationEdit';
+import DocumentManager from './Creates/DocumentManager';
+import TrashDocuments from './Creates/TrashDocuments';
 
 const App = () => {
   return (
@@ -98,6 +103,7 @@ const App = () => {
             <Route path="/contracts/update/:id" element={<EditContract />} />
             <Route path="/contracts/List" element={<ContractList/>} />
             <Route path="/contractviewonly" element={<OnlyviewContract/>} />
+            <Route path="/contractviewonlyField" element={<OnlyviewContract_field/>} />
 
 
             {/* Clients */}
@@ -109,6 +115,8 @@ const App = () => {
             {/* Suppliers */}
             <Route path="/supliers/create" element={< CreateSupplier/>} />
             <Route path="/suppliers/List" element={<SupplierList />} />
+            <Route path="/suppliers/ListOpera" element={<SupplierLstViewOnly />} />
+            <Route path="/suppliers/Listfield" element={<SupplierLstViewOnlyField />} />
             <Route path="/suppliers/update/:id" element={<UpdateSupplier />} />
 
             {/* Purchase order */}
@@ -116,6 +124,7 @@ const App = () => {
             <Route path="/purchaseorder/List" element={<PurchaseOrderList />} />
             <Route path="/purchaseorder/update/:id" element={<UpdatePurchaseOrder />} />
             <Route path="/purchaseorderOnly" element={<Purchaseorder />} />
+            <Route path="/purchaseorderOnlyField" element={<PurchaseOrderListField />} />
 
             {/* Supply order */}
             <Route path="/supplieorder/create" element={< CreateSupplyOrder/>} />
@@ -135,6 +144,15 @@ const App = () => {
             <Route path="/Estimation/List" element={<EstimationList/>} />
             <Route path="/Estimation/create" element={<CreateEstimation/>} />
             <Route path="/estimation/update/:id" element={<EstimationEdit/>} />
+
+            {/* FIELD CHIEF DOCUMENTS*/}
+
+
+            <Route path="/comewith/create" element={< DocumentManager/>} />
+
+            {/* Trash */}
+
+            <Route path="/Trash/create" element={< TrashDocuments/>} />
 
 
           </Routes>

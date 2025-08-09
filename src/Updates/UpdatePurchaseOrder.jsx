@@ -8,7 +8,8 @@ const UpdatePurchaseOrder = () => {
     Client_Name: '',
     Description_of_Goods: '',
     Quantity: '',
-    Unit_Price: ''
+    Unit_Price: '',
+    Status: '',             // Add Status here
   });
 
   const navigate = useNavigate();
@@ -19,11 +20,21 @@ const UpdatePurchaseOrder = () => {
       try {
         const res = await axios.get(`http://localhost:8000/api/v1/purchase-orders/get/${id}`);
         const data = res.data;
-        // Remove time portion if present
+
+        // Remove time portion if present on date
         if (data.Date_Received) {
           data.Date_Received = data.Date_Received.split('T')[0];
         }
-        setForm(data);
+
+        // Ensure Status is defined to avoid uncontrolled <select>
+        setForm({
+          Date_Received: data.Date_Received || '',
+          Client_Name: data.Client_Name || '',
+          Description_of_Goods: data.Description_of_Goods || '',
+          Quantity: data.Quantity || '',
+          Unit_Price: data.Unit_Price || '',
+          Status: data.Status || '',    // Make sure to include this
+        });
       } catch (error) {
         console.error('Error fetching order:', error);
       }
@@ -79,7 +90,8 @@ const UpdatePurchaseOrder = () => {
           display: flex;
           justify-content: center;
         }
-        .input-wrapper input {
+        .input-wrapper input,
+        .input-wrapper select {
           width: 80%;
           padding: 10px;
           border: 1px solid #cbd5e1;
@@ -87,7 +99,8 @@ const UpdatePurchaseOrder = () => {
           background-color: #f9fafb;
           font-size: 15px;
         }
-        .input-wrapper input:focus {
+        .input-wrapper input:focus,
+        .input-wrapper select:focus {
           outline: none;
           border-color: #2563eb;
           background-color: white;
@@ -115,20 +128,69 @@ const UpdatePurchaseOrder = () => {
         <h2>Update Purchase Order</h2>
         <form onSubmit={handleSubmit}>
           <div className="input-wrapper">
-            <input type="date" name="Date_Received" required value={form.Date_Received} onChange={handleChange} />
+            <input
+              type="date"
+              name="Date_Received"
+              required
+              value={form.Date_Received}
+              onChange={handleChange}
+            />
           </div>
           <div className="input-wrapper">
-            <input type="text" name="Client_Name" placeholder="Client Name" required value={form.Client_Name} onChange={handleChange} />
+            <input
+              type="text"
+              name="Client_Name"
+              placeholder="Client Name"
+              required
+              value={form.Client_Name}
+              onChange={handleChange}
+            />
           </div>
           <div className="input-wrapper">
-            <input type="text" name="Description_of_Goods" placeholder="Description of Goods" required value={form.Description_of_Goods} onChange={handleChange} />
+            <input
+              type="text"
+              name="Description_of_Goods"
+              placeholder="Description of Goods"
+              required
+              value={form.Description_of_Goods}
+              onChange={handleChange}
+            />
           </div>
           <div className="input-wrapper">
-            <input type="number" name="Quantity" placeholder="Quantity" required value={form.Quantity} onChange={handleChange} />
+            <input
+              type="number"
+              name="Quantity"
+              placeholder="Quantity"
+              required
+              value={form.Quantity}
+              onChange={handleChange}
+            />
           </div>
           <div className="input-wrapper">
-            <input type="number" step="0.01" name="Unit_Price" placeholder="Unit Price" required value={form.Unit_Price} onChange={handleChange} />
+            <input
+              type="number"
+              step="0.01"
+              name="Unit_Price"
+              placeholder="Unit Price"
+              required
+              value={form.Unit_Price}
+              onChange={handleChange}
+            />
           </div>
+          <div className="input-wrapper">
+            <select
+              name="Status"
+              value={form.Status}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select Status</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Complete">Complete</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
           <button type="submit">Update Purchase Order</button>
         </form>
       </div>

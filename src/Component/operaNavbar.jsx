@@ -98,7 +98,7 @@ const ProcurementNavbar = () => {
         <nav className="nav-links">
           <Link to="/operacDash">Dashboard</Link>
           <Link to="/purchaseorderOnly">view Purchase Order</Link>
-          {/* <Link to="/suppliers/List">view Supplier</Link> */}
+          <Link to="/suppliers/ListOpera">view Supplier</Link>
           <Link to="/contractviewonly">view All Contract</Link>
           <Link to="/contracts/List">Logout</Link>
           

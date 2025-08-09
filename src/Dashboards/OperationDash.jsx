@@ -65,9 +65,7 @@ const ProcurementsDash = () => {
       minWidth: '200px',
       height: '170px',
       color: 'white'
-      
     },
-
     card1: {
       backgroundColor: '#10B981',
       padding: '20px',
@@ -76,7 +74,6 @@ const ProcurementsDash = () => {
       flex: '1',
       minWidth: '200px',
       height: '170px'
-      
     },
     card3: {
       backgroundColor: '#caa305ff',
@@ -86,7 +83,6 @@ const ProcurementsDash = () => {
       flex: '1',
       minWidth: '200px',
       height: '170px'
-      
     },
     card2: {
       backgroundColor: '#EF4444',
@@ -96,14 +92,12 @@ const ProcurementsDash = () => {
       flex: '1',
       minWidth: '200px',
       height: '170px'
-      
     },
     cardTitle: {
       fontSize: '25px',
       color: 'white',
       marginBottom: '10px',
       fontWeight: 'bold',
-      
     },
     cardValue: {
       fontSize: '34px',
@@ -129,29 +123,56 @@ const ProcurementsDash = () => {
       fontWeight: '600',
       marginBottom: '20px',
     },
-    table: {
-      width: '100%',
-      borderCollapse: 'collapse',
-      marginTop: '40px',
+    latestContracts: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+      gap: '20px',
+      marginTop: '20px',
     },
-    th: {
-      textAlign: 'left',
-      padding: '10px',
-      borderBottom: '1px solid #ccc',
-      fontWeight: '600',
+    contractCard: {
+      backgroundColor: '#fff',
+      padding: '15px',
+      borderRadius: '10px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '8px',
     },
-    td: {
-      padding: '10px',
-      borderBottom: '1px solid #eee',
+    contractTitle: {
+      fontWeight: 'bold',
+      fontSize: '16px',
+      color: '#111827',
     },
+    contractText: {
+      fontSize: '14px',
+      color: '#4b5563',
+    },
+    statusBadge: {
+      padding: '4px 8px',
+      borderRadius: '5px',
+      fontSize: '12px',
+      fontWeight: 'bold',
+      display: 'inline-block',
+      width: 'fit-content'
+    }
+  };
+
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Complete': return { backgroundColor: '#10B981', color: 'white' };
+      case 'Cancelled': return { backgroundColor: '#EF4444', color: 'white' };
+      case 'In progress': return { backgroundColor: '#F59E0B', color: 'white' };
+      default: return { backgroundColor: '#9CA3AF', color: 'white' };
+    }
   };
 
   return (
     <div>
       <ProcurementNavbar />
       <div style={styles.container}>
-        <h2 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '20px' }}>📊Operation Dashboard</h2>
+        <h2 style={{ fontSize: '28px', fontWeight: 'bold', marginBottom: '20px' }}>📊 Operation Dashboard</h2>
 
+        {/* Summary Cards */}
         <div style={styles.cardContainer}>
           <div style={styles.card}>
             <div style={styles.cardTitle}>Total Contracts</div>
@@ -161,7 +182,6 @@ const ProcurementsDash = () => {
             <div style={styles.cardTitle}>Completed</div>
             <div style={styles.cardValue}>{summary.Completed}</div>
           </div>
-
           <div style={styles.card3}>
             <div style={styles.cardTitle}>In Progress</div>
             <div style={styles.cardValue}>{summary.inProgressContracts}</div>
@@ -170,45 +190,38 @@ const ProcurementsDash = () => {
             <div style={styles.cardTitle}>Cancelled</div>
             <div style={styles.cardValue}>{summary.Cancelled}</div>
           </div>
-          
         </div>
 
+        {/* Charts */}
         <div style={styles.chartContainer}>
           <div style={styles.chartBox}>
             <h3 style={styles.chartTitle}>📅 Contracts Over Time</h3>
             <BarChart data={contracts} />
           </div>
-
           <div style={styles.chartBox}>
             <h3 style={styles.chartTitle}>📌 Status Distribution</h3>
             <PieChart data={contracts} />
           </div>
         </div>
 
+        {/* Latest Contracts as Cards */}
         <div>
           <h3 style={styles.chartTitle}>📃 Recent Contracts</h3>
-          <table style={styles.table}>
-            <thead>
-              <tr style={{ backgroundColor: '#f3f4f6' }}>
-                <th style={styles.th}>Client</th>
-                <th style={styles.th}>Good</th>
-                <th style={styles.th}>Quantity</th>
-                <th style={styles.th}>Status</th>
-                <th style={styles.th}>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contracts.slice(0, 5).map((contract) => (
-                <tr key={contract.ContractId}>
-                  <td style={styles.td}>{contract.Client_Name}</td>
-                  <td style={styles.td}>{contract.DescriptionOfGood}</td>
-                  <td style={styles.td}>{contract.Quantity}</td>
-                  <td style={styles.td}>{contract.Status}</td>
-                  <td style={styles.td}>{new Date(contract.Contract_Date).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div style={styles.latestContracts}>
+            {contracts.slice(0, 5).map((contract) => (
+              <div key={contract.ContractId} style={styles.contractCard}>
+                <div style={styles.contractTitle}>{contract.Client_Name}</div>
+                <div style={styles.contractText}>Good: {contract.DescriptionOfGood}</div>
+                <div style={styles.contractText}>Qty: {contract.Quantity}</div>
+                <div style={{ ...styles.statusBadge, ...getStatusStyle(contract.Status) }}>
+                  {contract.Status}
+                </div>
+                <div style={styles.contractText}>
+                  Date: {new Date(contract.Contract_Date).toLocaleDateString()}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

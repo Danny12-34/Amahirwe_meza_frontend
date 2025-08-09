@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import FieldChiefNavBar from '../../Component/FieldChiefNavBar';
 import {
   faPlus,
   faPen,
@@ -62,7 +62,7 @@ const PurchaseOrderList = () => {
 
   return (
     <div className="container">
-      <ProcurementNavbar />
+      <FieldChiefNavBar />
       <style>{`
         .container { padding: 1px; font-family: 'Segoe UI'; }
         .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; }

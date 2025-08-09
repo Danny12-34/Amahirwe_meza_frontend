@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import FieldChiefNavBar from '../../Component/FieldChiefNavBar';
 import {
     faPlus,
     faPen,
@@ -10,28 +10,9 @@ import {
     faFilePdf,
     faChevronLeft,
     faChevronRight,
-    faDownload,
 } from '@fortawesome/free-solid-svg-icons';
 
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'; // ✅ CORRECT IMPORT
-
-
-// Helper function to format date ignoring timezone shifts
-const formatDateUTC = (dateString) => {
-    if (!dateString) return '';
-
-    const d = new Date(dateString);
-    if (isNaN(d)) return ''; // invalid date check
-
-    const year = d.getUTCFullYear();
-    const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
-    const day = d.getUTCDate().toString().padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-};
-
-const ContractList = () => {
+const OnlyviewContract= () => {
     const [contracts, setContracts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchColumn, setSearchColumn] = useState('Client_Name'); // default search column
@@ -46,160 +27,6 @@ const ContractList = () => {
             console.error('Error fetching contracts:', error);
         }
     };
-
-    const handleStatusUpdate = async () => {
-        try {
-            const res = await axios.put('http://localhost:8000/api/v1/contracts/auto-update-status');
-            alert(res.data.message || 'Contract statuses updated successfully.');
-            // Refresh contract data after status update
-            fetchContracts();
-        } catch (err) {
-            console.error('Error updating contract statuses:', err);
-            alert('Failed to update contract statuses.');
-        }
-    };
-
-    // === NEW: PDF Report Download ===
-
-
-    const handleDownloadReport = () => {
-    const doc = new jsPDF('p', 'mm', 'a4');
-    const marginLeft = 14;
-    const columnGap = 8;
-    const columnWidth = (182 - columnGap) / 2;
-    const today = new Date();
-
-    const formatDate = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('en-GB', {
-            year: 'numeric',
-            month: 'short',
-            day: '2-digit',
-        });
-
-    // Header Section
-    doc.setFillColor(30, 58, 138); // Deep Blue
-    doc.rect(0, 0, 210, 28, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.text('AMAHIRWE MEZA Ltd', marginLeft, 12);
-    doc.setFontSize(26);
-    doc.setFont('helvetica', 'bold');
-    doc.text('CONTRACTS REPORT', marginLeft, 26);
-
-    let y = 34;
-
-    // Column 1: Contract Overview
-    doc.setFillColor(240, 249, 255); // Light blue background
-    doc.roundedRect(marginLeft - 2, y, columnWidth, 46, 4, 4, 'F');
-
-    doc.setTextColor(17, 24, 39); // Dark text
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text(`Total Contracts: ${filteredContracts.length}`, marginLeft, y + 8);
-
-    const statusCount = filteredContracts.reduce((acc, curr) => {
-        const status = (curr.Status || 'Unknown').toLowerCase();
-        acc[status] = (acc[status] || 0) + 1;
-        return acc;
-    }, {});
-
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Status Breakdown:', marginLeft, y + 16);
-
-    Object.entries(statusCount).forEach(([status, count], i) => {
-        const label = `• ${status.charAt(0).toUpperCase() + status.slice(1)}: ${count}`;
-        doc.text(label, marginLeft + 4, y + 24 + i * 6);
-    });
-
-    // Column 2: Product Summary with P IDs
-    const productX = marginLeft + columnWidth + columnGap;
-    const productMap = {};
-
-    filteredContracts.forEach(contract => {
-        const product = contract.DescriptionOfGood || 'Unknown';
-        const id = contract.Quantity || contract.Quantity || 'N/A'; // Adjust ID field as needed
-        if (!productMap[product]) {
-            productMap[product] = [];
-        }
-        productMap[product].push(id);
-    });
-
-    const productBoxHeight = 46 + Object.keys(productMap).length * 6;
-
-    doc.setFillColor(254, 242, 242); // Light red/pink
-    doc.roundedRect(productX - 2, y, columnWidth, productBoxHeight, 4, 4, 'F');
-
-    doc.setTextColor(74, 20, 140); // Deep Purple
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Product Summary:', productX, y + 8);
-
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const products = Object.entries(productMap);
-    products.forEach(([product, Quantity], i) => {
-        const label = `• ${product}: Product IDs: ${Quantity.join(', ')}`;
-        doc.text(label, productX + 4, y + 14 + i * 6);
-    });
-
-    const bottomY = y + 52 + products.length * 6;
-
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total Products: ${products.length}`, productX, bottomY);
-
-    // Table Section
-    const headers = [['Client', 'Product', 'IDs', 'Contract Date', 'Deadline', 'Status']];
-    const data = filteredContracts.map(contract => [
-        contract.Client_Name || '',
-        contract.DescriptionOfGood || '',
-        contract.Amount_category || '',
-        (contract.id || contract.Quantity|| '').toString(),
-        formatDate(contract.Contract_Date),
-        formatDate(contract.Delivery_deadline),
-        contract.Status || '',
-    ]);
-
-    autoTable(doc, {
-        startY: bottomY + 10,
-        head: headers,
-        body: data,
-        styles: {
-            fontSize: 10,
-            cellPadding: 3,
-            overflow: 'linebreak',
-        },
-        headStyles: {
-            fillColor: [22, 101, 52], // Dark green
-            textColor: 255,
-            fontStyle: 'bold',
-        },
-        alternateRowStyles: { fillColor: [245, 245, 245] },
-        margin: { left: marginLeft, right: 14 },
-    });
-
-    // Footer
-    const pageHeight = doc.internal.pageSize.height;
-
-    doc.setTextColor(100);
-    doc.setFontSize(10);
-    doc.text(`Generated on: ${formatDate(today)}`, marginLeft, pageHeight - 18);
-
-    doc.setFontSize(9);
-    doc.text('End of Report — Confidential © ' + today.getFullYear(), marginLeft, pageHeight - 10);
-
-    doc.save('Contracts_Report.pdf');
-};
-
-
-
-
-
-
-
-
 
     const deleteContract = async (id) => {
         if (window.confirm('Delete this contract?')) {
@@ -217,7 +44,7 @@ const ContractList = () => {
     }, []);
 
     const getStatusColor = (status) => {
-        switch (status?.toLowerCase()) {
+        switch (status.toLowerCase()) {
             case 'complete':
                 return '#16a34a'; // green
             case 'in progress':
@@ -225,15 +52,10 @@ const ContractList = () => {
                 return '#ca8a04'; // yellow
             case 'cancelled':
                 return '#dc2626'; // red
-            case 'next month':
-                return '#2563eb'; // 🔵 blue
-            case 'upcoming':
-                return '#fb923c'; // 🟠 orange
             default:
                 return '#000000';
         }
     };
-
 
     const getColumnValue = (contract, column) => {
         switch (column) {
@@ -241,14 +63,12 @@ const ContractList = () => {
                 return contract.Client_Name || '';
             case 'DescriptionOfGood':
                 return contract.DescriptionOfGood || '';
-            case 'Amount_category':
-                return contract.Amount_category || '';
             case 'Quantity':
                 return contract.Quantity?.toString() || '';
             case 'Contract_Date':
-                return formatDateUTC(contract.Contract_Date);
+                return contract.Contract_Date ? new Date(contract.Contract_Date).toISOString().split('T')[0] : '';
             case 'Delivery_deadline':
-                return formatDateUTC(contract.Delivery_deadline);
+                return contract.Delivery_deadline ? new Date(contract.Delivery_deadline).toISOString().split('T')[0] : '';
             case 'Status':
                 return contract.Status || '';
             default:
@@ -272,7 +92,7 @@ const ContractList = () => {
         }
     };
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (currentPage > totalPages) {
             setCurrentPage(1);
         }
@@ -418,43 +238,11 @@ const ContractList = () => {
             `}</style>
 
             <div className="container">
-                <ProcurementNavbar />
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: '20px' }}>
-                    <button
-                        onClick={handleStatusUpdate}
-                        style={{
-                            backgroundColor: '#2563eb',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '8px 14px',
-                            borderRadius: '6px',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        🔁 Update Contract Status
-                    </button>
-
-                    {/* Download Report Button */}
-                    <button
-                        onClick={handleDownloadReport}
-                        style={{
-                            backgroundColor: '#10b981',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '8px 14px',
-                            borderRadius: '6px',
-                            fontSize: '14px',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        <FontAwesomeIcon icon={faDownload} /> Download Report
-                    </button>
-                </div>
+                <FieldChiefNavBar />
                 <h2 className="title">📄 All Contracts</h2>
-                <Link to="/contracts/create" className="add-button">
+                {/* <Link to="/contracts/create" className="add-button">
                     <FontAwesomeIcon icon={faPlus} /> Add Contract
-                </Link>
+                </Link> */}
 
                 {/* Search select and input */}
                 <div style={{ marginBottom: '12px' }}>
@@ -467,9 +255,8 @@ const ContractList = () => {
                         }}
                     >
                         <option value="Client_Name">Client Name</option>
-                        <option value="DescriptionOfGood">Description</option>
-                        <option value="Amount_category">Amount/Category</option>
-                        <option value="Quantity">Contract Number</option>
+                        <option value="DescriptionOfGood">Product Name</option>
+                        <option value="Quantity">Quantity</option>
                         <option value="Contract_Date">Contract Date</option>
                         <option value="Delivery_deadline">Deadline Date</option>
                         <option value="Status">Status</option>
@@ -491,14 +278,13 @@ const ContractList = () => {
                     <thead>
                         <tr>
                             <th>Client Name</th>
-                            <th>Contract Number</th>
-                            <th>Description</th>      
-                            <th>Amount/Category</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
                             <th>Contract Date</th>
                             <th>Deadline Date</th>
                             <th>Status</th>
                             <th>Contract File</th>
-                            <th>Actions</th>
+                            {/* <th>Actions</th> */}
                         </tr>
                     </thead>
                     <tbody>
@@ -506,11 +292,10 @@ const ContractList = () => {
                             currentContracts.map((contract) => (
                                 <tr key={contract.ContractId}>
                                     <td>{contract.Client_Name}</td>
+                                    <td>{contract.DescriptionOfGood}</td>
                                     <td>{contract.Quantity}</td>
-                                    <td>{contract.DescriptionOfGood}</td>         
-                                    <td>{contract.Amount_category}</td>                            
-                                    <td>{formatDateUTC(contract.Contract_Date)}</td>
-                                    <td>{formatDateUTC(contract.Delivery_deadline)}</td>
+                                    <td>{contract.Contract_Date ? new Date(contract.Contract_Date).toISOString().split('T')[0] : ''}</td>
+                                    <td>{contract.Delivery_deadline ? new Date(contract.Delivery_deadline).toISOString().split('T')[0] : ''}</td>
                                     <td style={{ color: getStatusColor(contract.Status), fontWeight: 'bold' }}>
                                         {contract.Status}
                                     </td>
@@ -528,14 +313,14 @@ const ContractList = () => {
                                             <span className="no-file">No file</span>
                                         )}
                                     </td>
-                                    <td className="actions">
+                                    {/* <td className="actions">
                                         <Link to={`/contracts/update/${contract.ContractId}`} className="edit-link">
                                             <FontAwesomeIcon icon={faPen} /> Edit
                                         </Link>
                                         <button onClick={() => deleteContract(contract.ContractId)} className="delete-button">
                                             <FontAwesomeIcon icon={faTrash} /> Delete
                                         </button>
-                                    </td>
+                                    </td> */}
                                 </tr>
                             ))
                         ) : (
@@ -574,4 +359,4 @@ const ContractList = () => {
     );
 };
 
-export default ContractList;
+export default OnlyviewContract

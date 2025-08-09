@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import OperaNavbar from '../../Component/operaNavbar';
 import {
   faPlus,
   faPen,
@@ -62,7 +62,7 @@ const SupplierList = () => {
 
   return (
     <div className="container">
-      <ProcurementNavbar />
+      <OperaNavbar />
       <style>{`
   .container {
     padding: 30px;
@@ -193,9 +193,9 @@ const SupplierList = () => {
 
 
       <h2 className="title">🏠 All Suppliers</h2>
-      <Link to="/supliers/create" className="add-button">
+      {/* <Link to="/supliers/create" className="add-button">
         <FontAwesomeIcon icon={faPlus} /> Add Supplier
-      </Link>
+      </Link> */}
 
       <div style={{ marginBottom: '12px' }}>
         <select
@@ -236,7 +236,7 @@ const SupplierList = () => {
             <th>Location</th>            
             <th>Category</th>
             <th>Agreements</th>
-            <th>Actions</th>
+            {/* <th>Actions</th> */}
           </tr>
         </thead>
         <tbody>
@@ -251,7 +251,7 @@ const SupplierList = () => {
                 {/* <td>{supplier.Registration_number}</td> */}
                 <td>{supplier.Product_Category}</td>
                 <td>{supplier.Verifiered}</td>
-                <td className="actions">
+                {/* <td className="actions">
                   <Link to={`/suppliers/update/${supplier.SupplierId}`} className="edit-link">
                     <FontAwesomeIcon icon={faPen} /> Edit
                   </Link>
@@ -261,7 +261,7 @@ const SupplierList = () => {
                   >
                     <FontAwesomeIcon icon={faTrash} /> Delete
                   </button>
-                </td>
+                </td> */}
               </tr>
             ))
           ) : (
