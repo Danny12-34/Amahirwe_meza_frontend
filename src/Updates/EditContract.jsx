@@ -87,8 +87,8 @@ const EditContract = () => {
       );
 
       if (response.status === 200 && response.data.success) {
-        alert('Contract updated successfully');
-        navigate('/');
+        // Redirect to /danny after update
+        navigate('/contracts/List');
       } else {
         alert('Failed to update contract: ' + (response.data.message || 'Unknown error'));
       }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../images/Logo/image.png';
 
-const ProcurementNavbar = () => {
+const AdminNavBar = () => {
   return (
     <>
       <style>{`
@@ -11,11 +11,11 @@ const ProcurementNavbar = () => {
           top: 0;
           left: 0;
           width: 100%;
-          background: linear-gradient(135deg, #039422ff, #0f04a0ff);
+          background: linear-gradient(135deg, #fce006ff, #088503ff);
           color: white;
           padding: 14px 30px;
           display: flex;
-          gap:20%;
+          gap:50%;
           align-items: center;
           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -96,10 +96,8 @@ const ProcurementNavbar = () => {
           AMAHIRWE MEZA Ltd
         </div>
         <nav className="nav-links">
-          <Link to="/operacDash">Dashboard</Link>
-          <Link to="/purchaseorderOnly">view Purchase Order</Link>
-          <Link to="/suppliers/ListOpera">view Supplier</Link>
-          <Link to="/contractviewonly">view All Contract</Link>
+          <Link to="/AdminDash">Dashboard</Link>
+          <Link to="/Admin">view All Users</Link>
           <Link to="/">Logout</Link>
           
         </nav>
@@ -108,4 +106,4 @@ const ProcurementNavbar = () => {
   );
 };
 
-export default ProcurementNavbar;
+export default AdminNavBar;

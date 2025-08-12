@@ -15,7 +15,7 @@ const MDashboardNavbar  = () => {
           color: white;
           padding: 14px 30px;
           display: flex;
-          gap:20%;
+          gap:30%;
           align-items: center;
           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -101,7 +101,7 @@ const MDashboardNavbar  = () => {
           {/* <Link to="/suppliers/List">view Supplier</Link> */}
           <Link to="/contractviewonly">view All Contract</Link>
           <Link to="/clients/List">View All Client</Link>
-          <Link to="/contracts/List">Logout</Link>
+          <Link to="/">Logout</Link>
           
         </nav>
       </div>

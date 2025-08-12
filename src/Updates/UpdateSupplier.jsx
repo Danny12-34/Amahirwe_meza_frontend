@@ -11,19 +11,19 @@ const UpdateSupplier = () => {
     Email: '',
     Phone: '',
     Address: '',
-    Status: 'Active'
+    Status: 'Active',
+    Verifiered: 'No', // This is your DB column for agreement
   });
 
   useEffect(() => {
     const fetchSupplier = async () => {
       try {
         const res = await axios.get(`http://localhost:8000/api/v1/suppliers/get/${id}`);
-        if (res.status === 200) {
-          setForm(res.data.data); // Adjust based on actual response shape
+        if (res.status === 200 && res.data.data) {
+          setForm(prev => ({ ...prev, ...res.data.data }));
         }
       } catch (err) {
         console.error('Error fetching supplier:', err);
-        alert('Could not fetch supplier data');
       }
     };
 
@@ -38,11 +38,15 @@ const UpdateSupplier = () => {
     e.preventDefault();
     try {
       await axios.put(`http://localhost:8000/api/v1/suppliers/update/${id}`, form);
-      alert('Supplier updated successfully');
-      navigate('/suppliers');
+      // Redirect based on Verifiered value
+      // if (form.Verifiered === 'Yes') {
+      //   console.log("Updated sucessfull");
+      // } else {
+      //   navigate('/suppliers');  // Redirect to suppliers list page
+      // }
+      navigate('/suppliers/List');
     } catch (error) {
       console.error('Error updating supplier:', error);
-      alert('Update failed');
     }
   };
 
@@ -58,6 +62,7 @@ const UpdateSupplier = () => {
         h2 {
           font-size: 24px;
           margin-bottom: 20px;
+          color: #1f2937;
         }
         form {
           display: flex;
@@ -68,6 +73,18 @@ const UpdateSupplier = () => {
           margin-bottom: 15px;
           border: 1px solid #ccc;
           border-radius: 5px;
+          font-size: 16px;
+          outline: none;
+          transition: border-color 0.3s ease;
+        }
+        input:focus, select:focus {
+          border-color: #2563eb;
+          box-shadow: 0 0 3px #2563eb;
+        }
+        label {
+          font-weight: 600;
+          margin-bottom: 6px;
+          color: #374151;
         }
         button {
           padding: 12px;
@@ -77,6 +94,7 @@ const UpdateSupplier = () => {
           border-radius: 5px;
           font-size: 16px;
           cursor: pointer;
+          transition: background-color 0.3s ease;
         }
         button:hover {
           background-color: #047857;
@@ -117,10 +135,30 @@ const UpdateSupplier = () => {
           required
           placeholder="Address"
         />
-        <select name="Status" value={form.Status} onChange={handleChange}>
+        <label htmlFor="Status">Status</label>
+        <select
+          id="Status"
+          name="Status"
+          value={form.Status}
+          onChange={handleChange}
+          required
+        >
           <option value="Active">Active</option>
           <option value="Inactive">Inactive</option>
         </select>
+
+        <label htmlFor="Verifiered">Update Agreement?</label>
+        <select
+          id="Verifiered"
+          name="Verifiered"
+          value={form.Verifiered}
+          onChange={handleChange}
+          required
+        >
+          <option value="N">No</option>
+          <option value="Y">Yes</option>
+        </select>
+
         <button type="submit">Update Supplier</button>
       </form>
     </div>

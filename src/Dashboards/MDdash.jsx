@@ -433,11 +433,13 @@ const MDash = () => {
                 )}
 
                 {!loading && !error && (
+                    
                     <>
+                    
                         <StatCard label="Total Clients" value={data.clients.total || 'N/A'} color="#059669" />
                         <StatCard label="Total Suppliers" value={data.suppliers.total || 'N/A'} color="#d97706" />
                         <StatCard label="Total Contracts" value={totalOrders} color="#2563eb" />
-                        <StatCard label="Total Supplier Orders" value={data.supplierOrders.placed || 'N/A'} color="#db2777" />
+                        <StatCard label="Total Users" value={data.supplierOrders.placed || 'N/A'} color="#db2777" />
 
                         <div
                             style={{

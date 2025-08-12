@@ -46,7 +46,7 @@ const AddContract = () => {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       alert('Contract created successfully!');
-      navigate('/');
+      navigate('/contracts/List'); // ✅ Redirect to Danny.jsx
     } catch (error) {
       console.error('Upload error:', error);
       alert('Failed to create contract. Please try again.');

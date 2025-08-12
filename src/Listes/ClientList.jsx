@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ProcurementNavbar from '../Component/ProcurementNavbar';
 import {
   faPlus,
   faPen,
@@ -61,6 +62,7 @@ const ClientList = () => {
 
   return (
     <div className="container">
+      <ProcurementNavbar/>
       <style>{`
         .container { padding: 24px; font-family: 'Segoe UI'; }
         .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; }

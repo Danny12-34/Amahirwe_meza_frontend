@@ -11,11 +11,11 @@ import {
     faChevronLeft,
     faChevronRight,
     faDownload,
+    faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable'; // ✅ CORRECT IMPORT
-
 
 // Helper function to format date ignoring timezone shifts
 const formatDateUTC = (dateString) => {
@@ -59,147 +59,152 @@ const ContractList = () => {
         }
     };
 
-    // === NEW: PDF Report Download ===
-
-
+    // === FULL PDF Report Download function ===
     const handleDownloadReport = () => {
-    const doc = new jsPDF('p', 'mm', 'a4');
-    const marginLeft = 14;
-    const columnGap = 8;
-    const columnWidth = (182 - columnGap) / 2;
-    const today = new Date();
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const marginLeft = 14;
+        const columnGap = 8;
+        const columnWidth = (182 - columnGap) / 2;
+        const today = new Date();
 
-    const formatDate = (dateStr) =>
-        new Date(dateStr).toLocaleDateString('en-GB', {
-            year: 'numeric',
-            month: 'short',
-            day: '2-digit',
+        const formatDate = (dateStr) =>
+            new Date(dateStr).toLocaleDateString('en-GB', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+            });
+
+        // Header Section
+        doc.setFillColor(30, 58, 138); // Deep Blue
+        doc.rect(0, 0, 210, 28, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bold');
+        doc.text('AMAHIRWE MEZA Ltd', marginLeft, 12);
+        doc.setFontSize(26);
+        doc.setFont('helvetica', 'bold');
+        doc.text('CONTRACTS REPORT', marginLeft, 26);
+
+        let y = 34;
+
+        // Column 1: Contract Overview
+        doc.setFillColor(240, 249, 255); // Light blue background
+        doc.roundedRect(marginLeft - 2, y, columnWidth, 46, 4, 4, 'F');
+
+        doc.setTextColor(17, 24, 39); // Dark text
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Total Contracts: ${filteredContracts.length}`, marginLeft, y + 8);
+
+        const statusCount = filteredContracts.reduce((acc, curr) => {
+            const status = (curr.Status || 'Unknown').toLowerCase();
+            acc[status] = (acc[status] || 0) + 1;
+            return acc;
+        }, {});
+
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Status Breakdown:', marginLeft, y + 16);
+
+        Object.entries(statusCount).forEach(([status, count], i) => {
+            const label = `• ${status.charAt(0).toUpperCase() + status.slice(1)}: ${count}`;
+            doc.text(label, marginLeft + 4, y + 24 + i * 6);
         });
 
-    // Header Section
-    doc.setFillColor(30, 58, 138); // Deep Blue
-    doc.rect(0, 0, 210, 28, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
-    doc.text('AMAHIRWE MEZA Ltd', marginLeft, 12);
-    doc.setFontSize(26);
-    doc.setFont('helvetica', 'bold');
-    doc.text('CONTRACTS REPORT', marginLeft, 26);
+        // Column 2: Product Summary with P IDs
+        const productX = marginLeft + columnWidth + columnGap;
+        const productMap = {};
 
-    let y = 34;
+        filteredContracts.forEach(contract => {
+            const product = contract.DescriptionOfGood || 'Unknown';
+            const id = contract.Quantity || 'N/A'; // Adjust ID field as needed
+            if (!productMap[product]) {
+                productMap[product] = [];
+            }
+            productMap[product].push(id);
+        });
 
-    // Column 1: Contract Overview
-    doc.setFillColor(240, 249, 255); // Light blue background
-    doc.roundedRect(marginLeft - 2, y, columnWidth, 46, 4, 4, 'F');
+        const productBoxHeight = 46 + Object.keys(productMap).length * 6;
 
-    doc.setTextColor(17, 24, 39); // Dark text
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'bold');
-    doc.text(`Total Contracts: ${filteredContracts.length}`, marginLeft, y + 8);
+        doc.setFillColor(254, 242, 242); // Light red/pink
+        doc.roundedRect(productX - 2, y, columnWidth, productBoxHeight, 4, 4, 'F');
 
-    const statusCount = filteredContracts.reduce((acc, curr) => {
-        const status = (curr.Status || 'Unknown').toLowerCase();
-        acc[status] = (acc[status] || 0) + 1;
-        return acc;
-    }, {});
+        doc.setTextColor(74, 20, 140); // Deep Purple
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Product Summary:', productX, y + 8);
 
-    doc.setFontSize(12);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Status Breakdown:', marginLeft, y + 16);
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'normal');
+        const products = Object.entries(productMap);
+        products.forEach(([product, Quantity], i) => {
+            const label = `• ${product}: Product IDs: ${Quantity.join(', ')}`;
+            doc.text(label, productX + 4, y + 14 + i * 6);
+        });
 
-    Object.entries(statusCount).forEach(([status, count], i) => {
-        const label = `• ${status.charAt(0).toUpperCase() + status.slice(1)}: ${count}`;
-        doc.text(label, marginLeft + 4, y + 24 + i * 6);
-    });
+        const bottomY = y + 52 + products.length * 6;
 
-    // Column 2: Product Summary with P IDs
-    const productX = marginLeft + columnWidth + columnGap;
-    const productMap = {};
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(0, 0, 0);
+        doc.text(`Total Products: ${products.length}`, productX, bottomY);
 
-    filteredContracts.forEach(contract => {
-        const product = contract.DescriptionOfGood || 'Unknown';
-        const id = contract.Quantity || contract.Quantity || 'N/A'; // Adjust ID field as needed
-        if (!productMap[product]) {
-            productMap[product] = [];
+        // Table Section
+        const headers = [['Client', 'Product', 'IDs', 'Contract Date', 'Deadline', 'Status']];
+        const data = filteredContracts.map(contract => [
+            contract.Client_Name || '',
+            contract.DescriptionOfGood || '',
+            contract.Quantity?.toString() || '',
+            formatDate(contract.Contract_Date),
+            formatDate(contract.Delivery_deadline),
+            contract.Status || '',
+        ]);
+
+        autoTable(doc, {
+            startY: bottomY + 10,
+            head: headers,
+            body: data,
+            styles: {
+                fontSize: 10,
+                cellPadding: 3,
+                overflow: 'linebreak',
+            },
+            headStyles: {
+                fillColor: [22, 101, 52], // Dark green
+                textColor: 255,
+                fontStyle: 'bold',
+            },
+            alternateRowStyles: { fillColor: [245, 245, 245] },
+            margin: { left: marginLeft, right: 14 },
+        });
+
+        // Footer
+        const pageHeight = doc.internal.pageSize.height;
+
+        doc.setTextColor(100);
+        doc.setFontSize(10);
+        doc.text(`Generated on: ${formatDate(today)}`, marginLeft, pageHeight - 18);
+
+        doc.setFontSize(9);
+        doc.text('End of Report — Confidential © ' + today.getFullYear(), marginLeft, pageHeight - 10);
+
+        doc.save('Contracts_Report.pdf');
+    };
+
+    // Cancel contract function (updates status to "Cancelled")
+    const cancelContract = async (contractId) => {
+        if (window.confirm('Are you sure you want to cancel this contract?')) {
+            try {
+                await axios.put(`http://localhost:8000/api/v1/contracts/cancel/${contractId}`, {
+                    Status: 'Cancelled',
+                });
+                alert('Contract cancelled successfully');
+                fetchContracts();
+            } catch (error) {
+                console.error('Error cancelling contract:', error);
+                alert('Failed to cancel contract');
+            }
         }
-        productMap[product].push(id);
-    });
-
-    const productBoxHeight = 46 + Object.keys(productMap).length * 6;
-
-    doc.setFillColor(254, 242, 242); // Light red/pink
-    doc.roundedRect(productX - 2, y, columnWidth, productBoxHeight, 4, 4, 'F');
-
-    doc.setTextColor(74, 20, 140); // Deep Purple
-    doc.setFontSize(18);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Product Summary:', productX, y + 8);
-
-    doc.setFontSize(11);
-    doc.setFont('helvetica', 'normal');
-    const products = Object.entries(productMap);
-    products.forEach(([product, Quantity], i) => {
-        const label = `• ${product}: Product IDs: ${Quantity.join(', ')}`;
-        doc.text(label, productX + 4, y + 14 + i * 6);
-    });
-
-    const bottomY = y + 52 + products.length * 6;
-
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total Products: ${products.length}`, productX, bottomY);
-
-    // Table Section
-    const headers = [['Client', 'Product', 'IDs', 'Contract Date', 'Deadline', 'Status']];
-    const data = filteredContracts.map(contract => [
-        contract.Client_Name || '',
-        contract.DescriptionOfGood || '',
-        contract.Amount_category || '',
-        (contract.id || contract.Quantity|| '').toString(),
-        formatDate(contract.Contract_Date),
-        formatDate(contract.Delivery_deadline),
-        contract.Status || '',
-    ]);
-
-    autoTable(doc, {
-        startY: bottomY + 10,
-        head: headers,
-        body: data,
-        styles: {
-            fontSize: 10,
-            cellPadding: 3,
-            overflow: 'linebreak',
-        },
-        headStyles: {
-            fillColor: [22, 101, 52], // Dark green
-            textColor: 255,
-            fontStyle: 'bold',
-        },
-        alternateRowStyles: { fillColor: [245, 245, 245] },
-        margin: { left: marginLeft, right: 14 },
-    });
-
-    // Footer
-    const pageHeight = doc.internal.pageSize.height;
-
-    doc.setTextColor(100);
-    doc.setFontSize(10);
-    doc.text(`Generated on: ${formatDate(today)}`, marginLeft, pageHeight - 18);
-
-    doc.setFontSize(9);
-    doc.text('End of Report — Confidential © ' + today.getFullYear(), marginLeft, pageHeight - 10);
-
-    doc.save('Contracts_Report.pdf');
-};
-
-
-
-
-
-
-
-
+    };
 
     const deleteContract = async (id) => {
         if (window.confirm('Delete this contract?')) {
@@ -233,7 +238,6 @@ const ContractList = () => {
                 return '#000000';
         }
     };
-
 
     const getColumnValue = (contract, column) => {
         switch (column) {
@@ -492,7 +496,7 @@ const ContractList = () => {
                         <tr>
                             <th>Client Name</th>
                             <th>Contract Number</th>
-                            <th>Description</th>      
+                            <th>Description</th>
                             <th>Amount/Category</th>
                             <th>Contract Date</th>
                             <th>Deadline Date</th>
@@ -507,8 +511,8 @@ const ContractList = () => {
                                 <tr key={contract.ContractId}>
                                     <td>{contract.Client_Name}</td>
                                     <td>{contract.Quantity}</td>
-                                    <td>{contract.DescriptionOfGood}</td>         
-                                    <td>{contract.Amount_category}</td>                            
+                                    <td>{contract.DescriptionOfGood}</td>
+                                    <td>{contract.Amount_category}</td>
                                     <td>{formatDateUTC(contract.Contract_Date)}</td>
                                     <td>{formatDateUTC(contract.Delivery_deadline)}</td>
                                     <td style={{ color: getStatusColor(contract.Status), fontWeight: 'bold' }}>
@@ -532,15 +536,27 @@ const ContractList = () => {
                                         <Link to={`/contracts/update/${contract.ContractId}`} className="edit-link">
                                             <FontAwesomeIcon icon={faPen} /> Edit
                                         </Link>
-                                        <button onClick={() => deleteContract(contract.ContractId)} className="delete-button">
+                                        <button
+                                            onClick={() => deleteContract(contract.ContractId)}
+                                            className="delete-button"
+                                            title="Delete Contract"
+                                        >
                                             <FontAwesomeIcon icon={faTrash} /> Delete
+                                        </button>
+                                        {/* New Cancel Button */}
+                                        <button
+                                            onClick={() => cancelContract(contract.ContractId)}
+                                            style={{ color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', fontWeight: 'bold', fontSize: '14px' }}
+                                            title="Cancel Contract"
+                                        >
+                                            <FontAwesomeIcon icon={faTimesCircle} /> Cancel
                                         </button>
                                     </td>
                                 </tr>
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="8" style={{ textAlign: 'center', padding: '20px', color: '#6b7280' }}>
+                                <td colSpan="9" style={{ textAlign: 'center', padding: '20px', color: '#6b7280' }}>
                                     No contracts found.
                                 </td>
                             </tr>

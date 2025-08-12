@@ -188,7 +188,7 @@ export default function DocumentManager() {
     <div style={{ maxWidth: 1000, margin: '20px auto', fontFamily: 'Arial, sans-serif' }}>
       <FieldChiefNavBar />
 
-      <h2 style={{ textAlign: 'center' }}>Document Manager</h2>
+      <h2 style={{ textAlign: 'center' }}>Trashed Document</h2>
 
       <div style={{ marginBottom: 20, textAlign: 'center' }}>
         <button

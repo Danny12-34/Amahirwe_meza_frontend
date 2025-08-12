@@ -16,7 +16,7 @@ const ProcurementNavbar = () => {
           color: white;
           padding: 14px 30px;
           display: flex;
-          gap:20%;
+          gap:15%;
           align-items: center;
           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -106,7 +106,7 @@ const ProcurementNavbar = () => {
           <Link to="/contractviewonlyField">Contract</Link>
           <Link to="/comewith/create">Documents</Link>
           <Link to="/Trash/create">CLass Marks</Link>
-          <Link to="/contracts/List">Logout</Link>
+          <Link to="/">Logout</Link>
           
         </nav>
       </div>

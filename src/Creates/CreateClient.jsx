@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ProcurementNavbar from '../Component/ProcurementNavbar';
 
 const CreateClient = () => {
   const [form, setForm] = useState({
@@ -22,7 +23,8 @@ const CreateClient = () => {
     e.preventDefault();
     try {
       await axios.post('http://localhost:8000/api/v1/clients/create', form);
-      navigate('/clients');
+      // Redirect to danny.js page route
+      navigate('/clients/List');
     } catch (error) {
       console.error('Error creating client:', error);
     }
@@ -30,6 +32,7 @@ const CreateClient = () => {
 
   return (
     <div className="form-wrapper">
+      <ProcurementNavbar/>
       <style>{`
   body {
     background-color: #f1f5f9;
@@ -40,10 +43,11 @@ const CreateClient = () => {
     justify-content: center;
     align-items: center;
     font-family: 'Segoe UI', sans-serif;
+    
   }
   .form-container {
     background: white;
-    padding: 40px;
+    padding-top: -10px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -59,10 +63,14 @@ const CreateClient = () => {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
-    justify-items: center;
-  }
+    padding-left: 20px;
+    padding-bottom: 20px;
+
+    }
   .form-container form .full-width {
     grid-column: span 2;
+    padding-top: 10px;
+    
   }
   .form-container input,
   .form-container select {
@@ -89,16 +97,16 @@ const CreateClient = () => {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    padding-left: 10px;
     font-size: 16px;
     transition: background-color 0.3s ease;
-    width: 100%;
+    width: 50%;
     max-width: 580px;
   }
   .form-container button:hover {
     background-color: #1e3a8a;
   }
 `}</style>
-
 
       <div className="form-container">
         <h2>Add New Client</h2>
@@ -155,11 +163,11 @@ const CreateClient = () => {
             <option value="Inactive">Inactive</option>
           </select>
 
-          <button type="submit" className="full-width">
+          <center><button type="submit" className="full-width">
             Create Client
-          </button>
+          </button></center>
+          
         </form>
-
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ const ProcurementDashboard = () => {
     { title: 'Total product requests', value: 0, color: '#2563eb' },
     { title: 'Total Suppliers', value: 0, color: '#16a34a' },
     { title: 'Total Contracts', value: 0, color: '#eab308' },
-    { title: 'Total Supplier Orders', value: 0, color: '#7c3aed' },
+    // { title: 'Total Supplier Orders', value: 0, color: '#7c3aed' },
   ]);
   const [contracts, setContracts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -80,11 +80,11 @@ const ProcurementDashboard = () => {
             value: contractsCountRes.data.totalContracts || 0,
             color: '#eab308',
           },
-          {
-            title: 'Total Supplier Orders',
-            value: supplyOrdersRes.data.totalSupplyOrders || 0,
-            color: '#7c3aed',
-          },
+          // {
+          //   title: 'Total Supplier Orders',
+          //   value: supplyOrdersRes.data.totalSupplyOrders || 0,
+          //   color: '#7c3aed',
+          // },
         ]);
 
         setContracts(contractsRes.data.data || []);

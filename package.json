@@ -53,5 +53,18 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
     "tailwindcss-cli": "^0.1.2"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Danny12-34/Amahirwe_meza_frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Danny12-34/Amahirwe_meza_frontend/issues"
+  },
+  "homepage": "https://github.com/Danny12-34/Amahirwe_meza_frontend#readme"
 }
