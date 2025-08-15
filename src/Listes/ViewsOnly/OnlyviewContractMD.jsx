@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FieldChiefNavBar from '../../Component/FieldChiefNavBar';
+import FieldChiefNavBar from '../../Component/MDashboardNavbar';
 import {
     faPlus,
     faPen,

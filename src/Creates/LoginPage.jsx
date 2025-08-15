@@ -178,7 +178,7 @@ export default function LoginPage() {
     <div style={styles.container}>
       {/* Left Pane */}
       <div style={styles.leftPane}>
-        <div style={styles.logo}>🚀 WELCOME TO AMHIRWE MEZA Ltd</div>
+        <div style={styles.logo}>🚀 WELCOME TO AMAHIRWE MEZA Ltd</div>
         <div style={styles.slogan}>
           Empowering your business with seamless operations and modern solutions.
         </div>
@@ -237,7 +237,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <button
+          {/* <button
             onClick={handleSignUpRedirect}
             style={{
               ...styles.signUpButton,
@@ -247,7 +247,7 @@ export default function LoginPage() {
             onMouseLeave={() => setHoveredBtn(null)}
           >
             Sign Up
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

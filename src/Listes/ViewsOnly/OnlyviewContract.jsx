@@ -256,7 +256,7 @@ const OnlyviewContract= () => {
                     >
                         <option value="Client_Name">Client Name</option>
                         <option value="DescriptionOfGood">Product Name</option>
-                        <option value="Quantity">Quantity</option>
+                        <option value="Quantity">Contract Number</option>
                         <option value="Contract_Date">Contract Date</option>
                         <option value="Delivery_deadline">Deadline Date</option>
                         <option value="Status">Status</option>
@@ -278,8 +278,9 @@ const OnlyviewContract= () => {
                     <thead>
                         <tr>
                             <th>Client Name</th>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
+                            <th>Contract Number</th>
+                            <th>Descriptions</th>
+                            
                             <th>Contract Date</th>
                             <th>Deadline Date</th>
                             <th>Status</th>
@@ -292,8 +293,8 @@ const OnlyviewContract= () => {
                             currentContracts.map((contract) => (
                                 <tr key={contract.ContractId}>
                                     <td>{contract.Client_Name}</td>
-                                    <td>{contract.DescriptionOfGood}</td>
                                     <td>{contract.Quantity}</td>
+                                    <td>{contract.DescriptionOfGood}</td>
                                     <td>{contract.Contract_Date ? new Date(contract.Contract_Date).toISOString().split('T')[0] : ''}</td>
                                     <td>{contract.Delivery_deadline ? new Date(contract.Delivery_deadline).toISOString().split('T')[0] : ''}</td>
                                     <td style={{ color: getStatusColor(contract.Status), fontWeight: 'bold' }}>

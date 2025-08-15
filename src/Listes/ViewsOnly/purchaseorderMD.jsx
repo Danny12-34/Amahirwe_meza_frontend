@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FieldChiefNavBar from '../../Component/FieldChiefNavBar';
+import ProcurementNavbar from '../../Component/MDashboardNavbar'; // Adjust path as necessary
 import {
   faPlus,
   faPen,
@@ -11,7 +11,7 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 
-const PurchaseOrderList = () => {
+const PurchaseOrder = () => {
   const [orders, setOrders] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchColumn, setSearchColumn] = useState('Client_Name');
@@ -62,9 +62,11 @@ const PurchaseOrderList = () => {
 
   return (
     <div className="container">
-      <FieldChiefNavBar />
+      {/* ProcurementNavbar is already included in App.js; include here only if needed */}
+      <ProcurementNavbar />
+
       <style>{`
-        .container { padding: 1px; font-family: 'Segoe UI'; }
+        .container { padding: 20px; font-family: 'Segoe UI'; }
         .title { font-size: 28px; font-weight: bold; margin-bottom: 20px; }
         .add-button {
           background-color: #3b82f6;
@@ -74,6 +76,7 @@ const PurchaseOrderList = () => {
           text-decoration: none;
           display: inline-block;
           margin-bottom: 16px;
+          transition: background-color 0.3s ease;
         }
         .add-button:hover { background-color: #2563eb; }
         .search-select, .search-input {
@@ -88,6 +91,8 @@ const PurchaseOrderList = () => {
           border-collapse: collapse;
           background: white;
           box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+          border-radius: 8px;
+          overflow: hidden;
         }
         th, td {
           padding: 14px;
@@ -118,10 +123,19 @@ const PurchaseOrderList = () => {
           border-radius: 6px;
           background-color: #f3f4f6;
           cursor: pointer;
+          transition: background-color 0.3s ease;
         }
         .pagination button.active {
           background-color: #2563eb;
           color: white;
+        }
+        .pagination button:hover:not(:disabled) {
+          background-color: #60a5fa;
+          color: white;
+        }
+        .pagination button:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
         }
       `}</style>
 
@@ -161,12 +175,11 @@ const PurchaseOrderList = () => {
       <table>
         <thead>
           <tr>
-            <th>P.O Number</th>
             <th>Date Received</th>
             <th>Client Name</th>
-            <th>Project Description</th>            
-            <th>P.O Amounts</th>
-            <th>Status</th>
+            <th>Description of Goods</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
             {/* <th>Actions</th> */}
           </tr>
         </thead>
@@ -174,23 +187,11 @@ const PurchaseOrderList = () => {
           {currentOrders.length > 0 ? (
             currentOrders.map((order) => (
               <tr key={order.PurchaseOrderId}>
-                <td>{order.Quantity}</td>
                 <td>{order.Date_Received?.split('T')[0]}</td>
                 <td>{order.Client_Name}</td>
-                <td>{order.Description_of_Goods}</td>                
+                <td>{order.Description_of_Goods}</td>
+                <td>{order.Quantity}</td>
                 <td>{order.Unit_Price}</td>
-                <td
-                  style={{
-                    color:
-                      order.Status === 'Complete' ? 'green' :
-                      order.Status === 'In Progress' ? 'orange' :
-                      order.Status === 'Cancelled' ? 'red' :
-                      'black',
-                    fontWeight: '600'
-                  }}
-                >
-                  {order.Status}
-                </td>
                 {/* <td className="actions">
                   <Link to={`/purchaseorder/update/${order.PurchaseOrderId}`} className="edit-link">
                     <FontAwesomeIcon icon={faPen} /> Edit
@@ -203,7 +204,7 @@ const PurchaseOrderList = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="7" style={{ textAlign: 'center', padding: '20px', color: '#6b7280' }}>
+              <td colSpan="6" style={{ textAlign: 'center', padding: '20px', color: '#6b7280' }}>
                 No orders found.
               </td>
             </tr>
@@ -234,4 +235,4 @@ const PurchaseOrderList = () => {
   );
 };
 
-export default PurchaseOrderList;
+export default PurchaseOrder;

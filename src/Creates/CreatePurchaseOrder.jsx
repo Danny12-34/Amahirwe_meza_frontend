@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import ProcurementNavbar from '../Component/FieldChiefNavBar';
 
 const CreatePurchaseOrder = () => {
   const [form, setForm] = useState({

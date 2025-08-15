@@ -8,6 +8,9 @@ const EstimationEdit = () => {
     const navigate = useNavigate();
 
     const [form, setForm] = useState({
+        B_Code: '',
+        Board_command: '',
+        Site: '',
         description: '',
         quantity: '',
         u_p_coting: '',
@@ -25,12 +28,16 @@ const EstimationEdit = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    // Fetch existing estimation
     useEffect(() => {
         const fetchEstimation = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/estimation/${id}`);
+                const res = await axios.get(`http://localhost:8000/api/estimation/get/${id}`);
                 if (res.data) {
                     setForm({
+                        B_Code: res.data.B_Code || '',
+                        Board_command: res.data.Board_command || '',
+                        Site: res.data.Site || '',
                         description: res.data.description || '',
                         quantity: res.data.quantity || '',
                         u_p_coting: res.data.u_p_coting || '',
@@ -56,6 +63,7 @@ const EstimationEdit = () => {
         fetchEstimation();
     }, [id]);
 
+    // Auto calculate values when quantity or unit price changes
     useEffect(() => {
         const qty = parseFloat(form.quantity) || 0;
         const unitPrice = parseFloat(form.u_p_coting) || 0;
@@ -86,9 +94,10 @@ const EstimationEdit = () => {
         }));
     }, [form.quantity, form.u_p_coting]);
 
+    // Handle form change
     const handleChange = (e) => {
         const { name, value } = e.target;
-        if (['description', 'quantity', 'u_p_coting'].includes(name)) {
+        if (['B_Code','Board_command', 'Site','description', 'quantity', 'u_p_coting'].includes(name)) {
             setForm((prev) => ({
                 ...prev,
                 [name]: value,
@@ -96,6 +105,7 @@ const EstimationEdit = () => {
         }
     };
 
+    // Handle form submit
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -134,8 +144,8 @@ const EstimationEdit = () => {
   }
   form {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns */
-    gap: 25px 40px; /* vertical and horizontal gaps */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px 40px;
   }
   label {
     display: block;
@@ -206,25 +216,60 @@ const EstimationEdit = () => {
   .cancel-link:hover {
     background-color: #6b7280;
   }
-
   @media (max-width: 992px) {
     form {
-      grid-template-columns: repeat(2, 1fr); /* fallback to 2 columns on smaller screens */
+      grid-template-columns: repeat(2, 1fr);
     }
   }
-
   @media (max-width: 600px) {
     form {
-      grid-template-columns: 1fr; /* fallback to 1 column on mobile */
+      grid-template-columns: 1fr;
     }
   }
 `}</style>
 
-
             <h2>Edit Estimation</h2>
             <form onSubmit={handleSubmit}>
+
                 <div>
-                    <label>Description:</label>
+                    <label>Board Code:</label>
+                    <input
+                        type="text"
+                        name="B_Code"
+                        value={form.B_Code}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+
+
+
+                <div>
+                    <label>Board Command:</label>
+                    <input
+                        type="text"
+                        name="Board_command"
+                        value={form.Board_command}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+
+                <div>
+                    <label>Site:</label>
+                    <input
+                        type="text"
+                        name="Site"
+                        value={form.Site}
+                        onChange={handleChange}
+                        required
+                    />
+                </div>
+
+                <div>
+                    <label>Items:</label>
                     <input
                         type="text"
                         name="description"

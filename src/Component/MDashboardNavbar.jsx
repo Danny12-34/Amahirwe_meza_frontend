@@ -97,10 +97,10 @@ const MDashboardNavbar  = () => {
         </div>
         <nav className="nav-links">
           <Link to="/MD_Dash">Dashboard</Link>
-          <Link to="/purchaseorderOnly">view Purchase Order</Link>
+          <Link to="/purchaseorderOnlyMD">view Purchase Order</Link>
           {/* <Link to="/suppliers/List">view Supplier</Link> */}
-          <Link to="/contractviewonly">view All Contract</Link>
-          <Link to="/clients/List">View All Client</Link>
+          <Link to="/contractviewonlyMD">view All Contract</Link>
+          <Link to="/EstimationMD">Estimation</Link>
           <Link to="/">Logout</Link>
           
         </nav>

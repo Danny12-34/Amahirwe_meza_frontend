@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import ProcurementNavbar from '../Component/ProcurementNavbar';
+import ProcurementNavbar from '../Component/FieldChiefNavBar';
 
 const CreateEstimation = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
+    B_Code: '',
+    Board_command: '',
+    Site: '',
     description: '',
     quantity: '',
     u_p_coting: '',
@@ -36,7 +39,7 @@ const CreateEstimation = () => {
     e.preventDefault();
 
     // Basic validation
-    if (!formData.description || !formData.quantity || !formData.u_p_coting || !formData.u_p_market) {
+    if (!formData.B_Code ||!formData.Board_command ||!formData.Site ||!formData.description || !formData.quantity || !formData.u_p_coting || !formData.u_p_market) {
       setError('Please fill in all fields.');
       return;
     }
@@ -49,6 +52,9 @@ const CreateEstimation = () => {
 
     try {
       await axios.post('http://localhost:8000/api/estimation/create', {
+        B_Code: formData.B_Code,
+        Board_command: formData.Board_command,
+        Site: formData.Site,
         description: formData.description,
         quantity: quantityNum,
         u_p_coting: u_p_cotingNum,
@@ -56,7 +62,7 @@ const CreateEstimation = () => {
         u_p_market: u_p_marketNum,
         t_p_market,      // calculated field
       });
-      navigate('/estimation'); // redirect to estimation list page
+      navigate('/Estimation/List'); // redirect to estimation list page
     } catch (err) {
       setError('Failed to create estimation.');
       setSubmitting(false);
@@ -104,18 +110,47 @@ const CreateEstimation = () => {
         }
       `}</style>
 
-      <h2>Create New Estimation</h2>
+      <h2>Create New B_Codetion</h2>
 
       {error && <div className="error">{error}</div>}
 
       <form onSubmit={handleSubmit}>
-        <label>Description</label>
+
+        <label>B_Code</label>
+        <input
+          type="text"
+          name="B_Code"
+          value={formData.B_Code}
+          onChange={handleChange}
+          placeholder="Enter Board Code"
+          required
+        />
+        <label>Board Command</label>
+        <input
+          type="text"
+          name="Board_command"
+          value={formData.Board_command}
+          onChange={handleChange}
+          placeholder="Enter Board Command"
+          required
+        />
+        <label>Site</label>
+        <input
+          type="text"
+          name="Site"
+          value={formData.Site}
+          onChange={handleChange}
+          placeholder="Enter Site"
+          required
+        />
+        
+        <label>Items</label>
         <input
           type="text"
           name="description"
           value={formData.description}
           onChange={handleChange}
-          placeholder="Enter description"
+          placeholder="Enter Item"
           required
         />
 
@@ -174,7 +209,7 @@ const CreateEstimation = () => {
         />
 
         <button type="submit" disabled={submitting}>
-          {submitting ? 'Saving...' : 'Save Estimation'}
+          {submitting ? 'Saving...' : 'Save B_Codetion'}
         </button>
       </form>
     </div>

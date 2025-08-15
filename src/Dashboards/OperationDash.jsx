@@ -211,8 +211,8 @@ const ProcurementsDash = () => {
             {contracts.slice(0, 5).map((contract) => (
               <div key={contract.ContractId} style={styles.contractCard}>
                 <div style={styles.contractTitle}>{contract.Client_Name}</div>
-                <div style={styles.contractText}>Good: {contract.DescriptionOfGood}</div>
-                <div style={styles.contractText}>Qty: {contract.Quantity}</div>
+                <div style={styles.contractText}>Contract No: {contract.Quantity}</div>
+                <div style={styles.contractText}>Good: {contract.DescriptionOfGood}</div>                
                 <div style={{ ...styles.statusBadge, ...getStatusStyle(contract.Status) }}>
                   {contract.Status}
                 </div>

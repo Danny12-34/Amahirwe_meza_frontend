@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import FieldChiefNavBar from '../Component/FieldChiefNavBar';
+import FieldChiefNavBar from '../../Component/MDashboardNavbar';
 import { faPlus, faPen, faTrash, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 
 const EstimationList = () => {
@@ -155,9 +155,9 @@ const EstimationList = () => {
       </div>
 
       <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-        <Link to="/estimation/create" style={styles.buttonPrimary}>
+        {/* <Link to="/estimation/create" style={styles.buttonPrimary}>
           <FontAwesomeIcon icon={faPlus} /> Add Estimation
-        </Link>
+        </Link> */}
 
         <select value={selectedBCode} onChange={(e) => setSelectedBCode(e.target.value)} style={{ padding: '8px', borderRadius: '6px', border: '1px solid #ccc' }}>
           <option value="">Select Board Code</option>
@@ -170,7 +170,7 @@ const EstimationList = () => {
         <table style={styles.table}>
           <thead>
             <tr>
-              {['B_Code', 'Command', 'Site', 'Item', 'Qty', 'U_P_Coting', 'T_P_Coting', 'U_P_Market', 'T_P_Market', 'TVA', 'Exc_TVA', '3%', 'T_Taxes', 'Refund', 'Profit', 'Actions'].map(col => (
+              {['B_Code', 'Command', 'Site', 'Item', 'Qty', 'U_P_Coting', 'T_P_Coting', 'U_P_Market', 'T_P_Market', 'TVA', 'Exc_TVA', '3%', 'T_Taxes', 'Refund', 'Profit'].map(col => (
                 <th key={col} style={styles.th}>{col}</th>
               ))}
             </tr>
@@ -193,10 +193,10 @@ const EstimationList = () => {
                 <td style={styles.td}>{formatNumber(est.t_taxes)}</td>
                 <td style={styles.td}>{formatNumber(est.refund)}</td>
                 <td style={{ ...styles.td, color: profitColor(est.profit), fontWeight: 'bold' }}>{formatNumber(est.profit)}</td>
-                <td style={styles.actionsTd}>
+                {/* <td style={styles.actionsTd}>
                   <Link to={`/estimation/update/${est.id}`} style={styles.editButton}><FontAwesomeIcon icon={faPen} /></Link>
                   <button onClick={() => deleteEstimation(est.id)} style={styles.deleteButton}><FontAwesomeIcon icon={faTrash} /></button>
-                </td>
+                </td> */}
               </tr>
             ))}
             <tr style={styles.totalsRow}>
