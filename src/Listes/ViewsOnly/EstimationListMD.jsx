@@ -13,7 +13,7 @@ const EstimationList = () => {
 
   const fetchEstimations = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/estimation/all');
+      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/estimation/all');
       setEstimations(res.data || []);
     } catch (error) {
       console.error('Error fetching estimations:', error);
@@ -28,7 +28,7 @@ const EstimationList = () => {
   const deleteEstimation = async (id) => {
     if (window.confirm("Delete this estimation?")) {
       try {
-        await axios.delete(`http://localhost:8000/api/estimation/delete/${id}`);
+        await axios.delete(`amahirwemezabackend-production.up.railway.app/api/estimation/delete/${id}`);
         fetchEstimations();
       } catch (err) { console.error(err); }
     }

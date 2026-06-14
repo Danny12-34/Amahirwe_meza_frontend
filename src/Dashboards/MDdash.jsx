@@ -48,11 +48,11 @@ const MDash = () => {
                     supplyOrdersRes,
                     clientsRes,
                 ] = await Promise.all([
-                    axios.get('http://localhost:8000/api/v1/contracts/getAll'),
-                    axios.get('http://localhost:8000/api/v1/suppliers/getAll'),
-                    axios.get('http://localhost:8000/api/v1/purchase-orders/getAll'),
-                    axios.get('http://localhost:8000/api/v1/supply-orders/getAll'),
-                    axios.get('http://localhost:8000/api/v1/clients/getAll'),
+                    axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll'),
+                    axios.get('amahirwemezabackend-production.up.railway.app/api/v1/suppliers/getAll'),
+                    axios.get('amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/getAll'),
+                    axios.get('amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/getAll'),
+                    axios.get('amahirwemezabackend-production.up.railway.app/api/v1/clients/getAll'),
                 ]);
 
                 const contracts = getArrayFromResponse(contractsRes);

@@ -21,7 +21,7 @@ const OnlyviewContract= () => {
 
     const fetchContracts = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/api/v1/contracts/getAll');
+            const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll');
             setContracts(res.data.data || []);
         } catch (error) {
             console.error('Error fetching contracts:', error);
@@ -31,7 +31,7 @@ const OnlyviewContract= () => {
     const deleteContract = async (id) => {
         if (window.confirm('Delete this contract?')) {
             try {
-                await axios.delete(`http://localhost:8000/api/v1/contracts/delete/${id}`);
+                await axios.delete(`amahirwemezabackend-production.up.railway.app/api/v1/contracts/delete/${id}`);
                 fetchContracts();
             } catch (error) {
                 console.error('Error deleting contract:', error);
@@ -303,7 +303,7 @@ const OnlyviewContract= () => {
                                     <td>
                                         {contract.Contr_file_path ? (
                                             <a
-                                                href={`http://localhost:8000/uploads/contracts/${contract.Contr_file_path}`}
+                                                href={`amahirwemezabackend-production.up.railway.app/uploads/contracts/${contract.Contr_file_path}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="view-button"

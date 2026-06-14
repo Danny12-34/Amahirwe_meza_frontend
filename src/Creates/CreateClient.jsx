@@ -22,7 +22,7 @@ const CreateClient = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/v1/clients/create', form);
+      await axios.post('amahirwemezabackend-production.up.railway.app/api/v1/clients/create', form);
       // Redirect to danny.js page route
       navigate('/clients/List');
     } catch (error) {

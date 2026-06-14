@@ -15,7 +15,7 @@ const CashRequest = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/cashrequest/getAll');
+      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/cashrequest/getAll');
       setData(res.data);
     } catch (error) {
       console.error('Error fetching cash requests:', error);

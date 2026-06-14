@@ -27,7 +27,7 @@ const PieChart = () => {
         setLoading(true);
         setError(null);
 
-        const res = await axios.get('http://localhost:8000/api/v1/contracts/getAll');
+        const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll');
         const contracts = res.data.data || [];
 
         const counts = {

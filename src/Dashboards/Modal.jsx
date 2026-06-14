@@ -58,7 +58,7 @@ function Modal({ children, onClose }) {
 }
 
 export default function AdminPanel() {
-  const API_BASE = 'http://localhost:8000/api/v1/users';
+  const API_BASE = 'amahirwemezabackend-production.up.railway.app/api/v1/users';
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -164,7 +164,7 @@ export default function AdminPanel() {
         };
         if (form.Password) updateData.Password = form.Password;
 
-        await axios.put(`${API_BASE}/update/${editingUser.UserId}`, updateData);
+        await axios.put(`${API_BASE}/update/${editingUser.user_id}`, updateData);
       }
 
       fetchUsers();
@@ -175,10 +175,10 @@ export default function AdminPanel() {
   };
 
   // Delete user
-  const handleDelete = async (userId) => {
+  const handleDelete = async (user_id) => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
     try {
-      await axios.delete(`${API_BASE}/delete/${userId}`);
+      await axios.delete(`${API_BASE}/delete/${user_id}`);
       fetchUsers();
     } catch {
       setError('Failed to delete user.');
@@ -231,7 +231,7 @@ export default function AdminPanel() {
         <table style={{ width: '100%', borderCollapse: 'collapse', background: 'white' }}>
           <thead style={{ background: '#34495e', color: 'white' }}>
             <tr>
-              <th style={{ padding: 10 }}>UserId</th>
+              <th style={{ padding: 10 }}>user_id</th>
               <th style={{ padding: 10 }}>First Name</th>
               <th style={{ padding: 10 }}>Last Name</th>
               <th style={{ padding: 10 }}>Email</th>
@@ -241,12 +241,12 @@ export default function AdminPanel() {
           </thead>
           <tbody>
             {users.map((u) => (
-              <tr key={u.UserId} style={{ borderBottom: '1px solid #ddd' }}>
-                <td style={{ padding: 10 }}>{u.UserId}</td>
-                <td style={{ padding: 10 }}>{u.F_Name}</td>
-                <td style={{ padding: 10 }}>{u.L_Name}</td>
-                <td style={{ padding: 10 }}>{u.Email}</td>
-                <td style={{ padding: 10 }}>{u.Role}</td>
+              <tr key={u.user_id} style={{ borderBottom: '1px solid #ddd' }}>
+                <td style={{ padding: 10 }}>{u.user_id}</td>
+                <td style={{ padding: 10 }}>{u.f_name}</td>
+                <td style={{ padding: 10 }}>{u.l_name}</td>
+                <td style={{ padding: 10 }}>{u.email}</td>
+                <td style={{ padding: 10 }}>{u.role}</td>
                 <td style={{ padding: 10 }}>
                   <button
                     onClick={() => openEditModal(u)}
@@ -263,7 +263,7 @@ export default function AdminPanel() {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(u.UserId)}
+                    onClick={() => handleDelete(u.user_id)}
                     style={{
                       padding: '5px 10px',
                       cursor: 'pointer',

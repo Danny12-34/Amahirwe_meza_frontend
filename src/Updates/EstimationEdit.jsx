@@ -32,7 +32,7 @@ const EstimationEdit = () => {
     useEffect(() => {
         const fetchEstimation = async () => {
             try {
-                const res = await axios.get(`http://localhost:8000/api/estimation/get/${id}`);
+                const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/estimation/get/${id}`);
                 if (res.data) {
                     setForm({
                         B_Code: res.data.B_Code || '',
@@ -109,7 +109,7 @@ const EstimationEdit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:8000/api/estimation/update/${id}`, form);
+            await axios.put(`amahirwemezabackend-production.up.railway.app/api/estimation/update/${id}`, form);
             alert('Estimation updated successfully');
             navigate('/estimation/list');
         } catch (err) {

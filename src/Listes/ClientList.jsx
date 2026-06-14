@@ -20,7 +20,7 @@ const ClientList = () => {
 
   const fetchClients = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/v1/clients/getAll');
+      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/clients/getAll');
       setClients(res.data || []);
     } catch (error) {
       console.error('Error fetching clients:', error);
@@ -30,7 +30,7 @@ const ClientList = () => {
   const deleteClient = async (id) => {
     if (window.confirm('Delete this client?')) {
       try {
-        await axios.delete(`http://localhost:8000/api/v1/clients/delete/${id}`);
+        await axios.delete(`amahirwemezabackend-production.up.railway.app/api/v1/clients/delete/${id}`);
         fetchClients();
       } catch (error) {
         console.error('Error deleting client:', error);

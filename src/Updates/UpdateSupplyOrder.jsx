@@ -15,7 +15,7 @@ const UpdateSupplyOrder = () => {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const res = await axios.get(`http://localhost:8000/api/v1/supply-orders/get/${id}`);
+      const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/get/${id}`);
       setForm(res.data);
     };
     fetchOrder();
@@ -27,7 +27,7 @@ const UpdateSupplyOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.put(`http://localhost:8000/api/v1/supply-orders/update/${id}`, form);
+    await axios.put(`amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/update/${id}`, form);
     navigate('/supply-orders');
   };
 

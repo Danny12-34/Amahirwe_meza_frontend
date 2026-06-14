@@ -3,7 +3,7 @@ import axios from 'axios';
 import SidebarNav from "../Component/AdminNavBar";
 // import SidebarNav from "./SidebarNav";
 
-const API_BASE = 'http://localhost:8000/api/users'; // Adjust to your API base URL
+const API_BASE = 'amahirwemezabackend-production.up.railway.app/api/users'; // Adjust to your API base URL
 
 export default function UserManagement() {
   // States
@@ -13,7 +13,7 @@ export default function UserManagement() {
 
   // Form for create/update
   const [form, setForm] = useState({
-    UserId: null,
+    user_id: null,
     F_Name: '',
     L_Name: '',
     Email: '',
@@ -76,7 +76,7 @@ export default function UserManagement() {
       try {
         await axios.post(`${API_BASE}/create`, form);
         setForm({
-          UserId: null,
+          user_id: null,
           F_Name: '',
           L_Name: '',
           Email: '',
@@ -103,10 +103,10 @@ export default function UserManagement() {
         };
         if (form.Password) updateData.Password = form.Password;
 
-        await axios.put(`${API_BASE}/update/${form.UserId}`, updateData);
+        await axios.put(`${API_BASE}/update/${form.user_id}`, updateData);
         setIsEditing(false);
         setForm({
-          UserId: null,
+          user_id: null,
           F_Name: '',
           L_Name: '',
           Email: '',
@@ -125,7 +125,7 @@ export default function UserManagement() {
   const handleEdit = (user) => {
     setIsEditing(true);
     setForm({
-      UserId: user.UserId,
+      user_id: user.user_id,
       F_Name: user.F_Name,
       L_Name: user.L_Name,
       Email: user.Email,
@@ -250,7 +250,7 @@ export default function UserManagement() {
               onClick={() => {
                 setIsEditing(false);
                 setForm({
-                  UserId: null,
+                  user_id: null,
                   F_Name: '',
                   L_Name: '',
                   Email: '',
@@ -282,7 +282,7 @@ export default function UserManagement() {
           >
             <thead style={{ backgroundColor: '#34495e', color: 'white' }}>
               <tr>
-                <th>UserId</th>
+                <th>user_id</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
@@ -292,15 +292,15 @@ export default function UserManagement() {
             </thead>
             <tbody>
               {users.map((u) => (
-                <tr key={u.UserId}>
-                  <td>{u.UserId}</td>
-                  <td>{u.F_Name}</td>
-                  <td>{u.L_Name}</td>
+                <tr key={u.user_id}>
+                  <td>{u.user_id}</td>
+                  <td>{u.f_name}</td>
+                  <td>{u.l_name}</td>
                   <td>{u.Email}</td>
                   <td>{u.Role}</td>
                   <td>
                     <button onClick={() => handleEdit(u)}>Edit</button>{' '}
-                    <button onClick={() => handleDelete(u.UserId)} style={{ color: 'red' }}>
+                    <button onClick={() => handleDelete(u.user_id)} style={{ color: 'red' }}>
                       Delete
                     </button>
                   </td>

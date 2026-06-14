@@ -40,7 +40,7 @@ const ContractList = () => {
 
     const fetchContracts = async () => {
         try {
-            const res = await axios.get('http://localhost:8000/api/v1/contracts/getAll');
+            const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll');
             setContracts(res.data.data || []);
         } catch (error) {
             console.error('Error fetching contracts:', error);
@@ -49,7 +49,7 @@ const ContractList = () => {
 
     const handleStatusUpdate = async () => {
         try {
-            const res = await axios.put('http://localhost:8000/api/v1/contracts/auto-update-status');
+            const res = await axios.put('https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/auto-update-status');
             alert(res.data.message || 'Contract statuses updated successfully.');
             // Refresh contract data after status update
             fetchContracts();
@@ -194,7 +194,7 @@ const ContractList = () => {
     const cancelContract = async (contractId) => {
         if (window.confirm('Are you sure you want to cancel this contract?')) {
             try {
-                await axios.put(`http://localhost:8000/api/v1/contracts/cancel/${contractId}`, {
+                await axios.put(`https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/cancel/${contractId}`, {
                     Status: 'Cancelled',
                 });
                 alert('Contract cancelled successfully');
@@ -204,12 +204,12 @@ const ContractList = () => {
                 alert('Failed to cancel contract');
             }
         }
-    };
+    }; 
 
     const deleteContract = async (id) => {
         if (window.confirm('Delete this contract?')) {
             try {
-                await axios.delete(`http://localhost:8000/api/v1/contracts/delete/${id}`);
+                await axios.delete(`https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/delete/${id}`);
                 fetchContracts();
             } catch (error) {
                 console.error('Error deleting contract:', error);
@@ -521,7 +521,7 @@ const ContractList = () => {
                                     <td>
                                         {contract.Contr_file_path ? (
                                             <a
-                                                href={`http://localhost:8000/uploads/contracts/${contract.Contr_file_path}`}
+                                                href={`https://amahirwemezabackend-production.up.railway.app/uploads/contracts/${contract.Contr_file_path}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="view-button"

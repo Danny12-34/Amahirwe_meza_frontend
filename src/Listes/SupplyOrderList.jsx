@@ -16,13 +16,13 @@ const SupplyOrderList = () => {
   }, []);
 
   const fetchOrders = async () => {
-    const res = await axios.get('http://localhost:8000/api/v1/supply-orders/getAll');
+    const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/getAll');
     setOrders(res.data || []);
   };
 
   const deleteOrder = async (id) => {
     if (window.confirm('Delete this supply order?')) {
-      await axios.delete(`http://localhost:8000/api/v1/supply-orders/delete/${id}`);
+      await axios.delete(`amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/delete/${id}`);
       fetchOrders();
     }
   };

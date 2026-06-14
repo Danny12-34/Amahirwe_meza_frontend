@@ -20,7 +20,7 @@ export default function DocumentManager() {
 
   const fetchDocuments = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/comewith/getAll');
+      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/comewith/getAll');
       setDocuments(res.data);
     } catch (error) {
       console.error('Failed to fetch documents', error);
@@ -59,7 +59,7 @@ export default function DocumentManager() {
       formData.append('CreatedAt', form.CreatedAt);
       formData.append('uploadDocument', form.uploadDocument);
 
-      const res = await axios.post('http://localhost:8000/api/comewith/create', formData, {
+      const res = await axios.post('amahirwemezabackend-production.up.railway.app/api/comewith/create', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setMessageType('success');
@@ -79,7 +79,7 @@ export default function DocumentManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this document?')) return;
     try {
-      await axios.delete(`http://localhost:8000/api/comewith/delete/${id}`);
+      await axios.delete(`amahirwemezabackend-production.up.railway.app/api/comewith/delete/${id}`);
       setMessageType('success');
       setMessage('Document deleted successfully');
       fetchDocuments();
@@ -111,7 +111,7 @@ export default function DocumentManager() {
     setLoading(true);
     setMessage('');
     try {
-      await axios.put(`http://localhost:8000/api/comewith/update/${editingId}`, {
+      await axios.put(`amahirwemezabackend-production.up.railway.app/api/comewith/update/${editingId}`, {
         DocID: form.DocID,
         DocumentType: form.DocumentType,
         CreatedAt: form.CreatedAt,
@@ -445,7 +445,7 @@ export default function DocumentManager() {
                   <td>{new Date(doc.CreatedAt).toLocaleString()}</td>
                   <td>
                     <a
-                      href={`http://localhost:8000/${doc.FilePath}`}
+                      href={`amahirwemezabackend-production.up.railway.app/${doc.FilePath}`}
                       target="_blank"
                       rel="noreferrer"
                     >

@@ -18,7 +18,7 @@ const UpdatePurchaseOrder = () => {
   useEffect(() => {
     const fetchOrder = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/purchase-orders/get/${id}`);
+        const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/get/${id}`);
         const data = res.data;
 
         // Remove time portion if present on date
@@ -50,7 +50,7 @@ const UpdatePurchaseOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/v1/purchase-orders/update/${id}`, form);
+      await axios.put(`amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/update/${id}`, form);
       navigate('/purchase-orders');
     } catch (error) {
       console.error('Error updating order:', error);

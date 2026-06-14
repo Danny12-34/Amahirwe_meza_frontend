@@ -23,7 +23,7 @@ const CashRequest = ({ onSubmitSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/cashrequest/submit', formData);
+      await axios.post('amahirwemezabackend-production.up.railway.app/api/cashrequest/submit', formData);
       if (onSubmitSuccess) onSubmitSuccess();
       setFormData({
         requisition_no: '',

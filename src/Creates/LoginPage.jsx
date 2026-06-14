@@ -135,7 +135,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const res = await axios.post('http://localhost:8000/api/login/login', {
+      const res = await axios.post('amahirwemezabackend-production.up.railway.app/api/login/login', {
         Email: email,
         Password: password,
       });

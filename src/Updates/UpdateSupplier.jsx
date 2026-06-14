@@ -18,7 +18,7 @@ const UpdateSupplier = () => {
   useEffect(() => {
     const fetchSupplier = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/suppliers/get/${id}`);
+        const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/v1/suppliers/get/${id}`);
         if (res.status === 200 && res.data.data) {
           setForm(prev => ({ ...prev, ...res.data.data }));
         }
@@ -37,7 +37,7 @@ const UpdateSupplier = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/v1/suppliers/update/${id}`, form);
+      await axios.put(`amahirwemezabackend-production.up.railway.app/api/v1/suppliers/update/${id}`, form);
       // Redirect based on Verifiered value
       // if (form.Verifiered === 'Yes') {
       //   console.log("Updated sucessfull");

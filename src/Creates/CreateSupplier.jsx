@@ -25,7 +25,7 @@ const CreateSupplier = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8000/api/v1/suppliers/create', form);
+      const res = await axios.post('amahirwemezabackend-production.up.railway.app/api/v1/suppliers/create', form);
       if (res.status === 201 || res.status === 200) {
         alert('Supplier created successfully');
         navigate('/suppliers/List');

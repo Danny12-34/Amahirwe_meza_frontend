@@ -33,7 +33,7 @@ const EditContract = () => {
   useEffect(() => {
     const fetchContract = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/contracts/get/${id}`);
+        const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/v1/contracts/get/${id}`);
         if (res.data.success) {
           setFormData(res.data.data);
         }
@@ -79,7 +79,7 @@ const EditContract = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/api/v1/contracts/update/${id}`,
+        `amahirwemezabackend-production.up.railway.app/api/v1/contracts/update/${id}`,
         data,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -283,7 +283,7 @@ const EditContract = () => {
             <label><FiFileText /> Current Contract File:</label>
             {formData.Contr_file_path ? (
               <a
-                href={`http://localhost:8000/uploads/contracts/${formData.Contr_file_path}`}
+                href={`amahirwemezabackend-production.up.railway.app/uploads/contracts/${formData.Contr_file_path}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import FieldChiefNavBar from '../Component/FieldChiefNavBar';
 
-const API_BASE = 'http://localhost:8000/api/Trash';
+const API_BASE = 'amahirwemezabackend-production.up.railway.app/api/Trash';
 const PAGE_SIZE = 10;
 
 export default function DocumentManager() {
@@ -434,7 +434,7 @@ export default function DocumentManager() {
                     </div>
 
                     <a
-                      href={`http://localhost:8000/uploadedTrashDocment/${filename}`}
+                      href={`amahirwemezabackend-production.up.railway.app/uploadedTrashDocment/${filename}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{

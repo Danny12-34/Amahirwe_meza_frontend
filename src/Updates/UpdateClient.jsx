@@ -18,7 +18,7 @@ const UpdateClient = () => {
   useEffect(() => {
     const fetchClient = async () => {
       try {
-        const res = await axios.get(`http://localhost:8000/api/v1/clients/get/${id}`);
+        const res = await axios.get(`amahirwemezabackend-production.up.railway.app/api/v1/clients/get/${id}`);
         setForm(res.data);
       } catch (error) {
         console.error('Error fetching client:', error);
@@ -35,7 +35,7 @@ const UpdateClient = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.put(`http://localhost:8000/api/v1/clients/update/${id}`, form);
+      const res = await axios.put(`amahirwemezabackend-production.up.railway.app/api/v1/clients/update/${id}`, form);
       if (res.status === 200) {
         alert('Client updated successfully! Redirecting...');
         navigate('/clients/List'); // Redirect immediately after success
