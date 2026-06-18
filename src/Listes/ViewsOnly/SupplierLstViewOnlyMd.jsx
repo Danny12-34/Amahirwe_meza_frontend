@@ -20,7 +20,7 @@ const SupplierList = () => {
 
   const fetchSuppliers = async () => {
     try {
-      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/suppliers/getAll');
+      const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/suppliers/getAll');
       setSuppliers(res.data.data || []);
     } catch (error) {
       console.error('Error fetching suppliers:', error);
@@ -30,7 +30,7 @@ const SupplierList = () => {
   const deleteSupplier = async (id) => {
     if (window.confirm('Delete this supplier?')) {
       try {
-        await axios.delete(`amahirwemezabackend-production.up.railway.app/api/v1/suppliers/delete/${id}`);
+        await axios.delete(`https://amahirwemezabackend-production.up.railway.app/api/v1/suppliers/delete/${id}`);
         fetchSuppliers();
       } catch (error) {
         console.error('Error deleting supplier:', error);

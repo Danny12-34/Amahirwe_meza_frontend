@@ -20,7 +20,7 @@ const PurchaseOrder = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/getAll');
+      const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/getAll');
       setOrders(res.data || []);
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -30,7 +30,7 @@ const PurchaseOrder = () => {
   const deleteOrder = async (id) => {
     if (window.confirm('Delete this order?')) {
       try {
-        await axios.delete(`amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/delete/${id}`);
+        await axios.delete(`https://amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/delete/${id}`);
         fetchOrders();
       } catch (error) {
         console.error('Error deleting order:', error);

@@ -51,7 +51,7 @@ const CreateEstimation = () => {
     setSubmitting(true);
 
     try {
-      await axios.post('amahirwemezabackend-production.up.railway.app/api/estimation/create', {
+      await axios.post('https://amahirwemezabackend-production.up.railway.app/api/estimation/create', {
         B_Code: formData.B_Code,
         Board_command: formData.Board_command,
         Site: formData.Site,

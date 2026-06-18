@@ -22,7 +22,7 @@ const CreatePurchaseOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/create', form);
+      await axios.post('https://amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/create', form);
       navigate('/purchaseorder/List');
     } catch (error) {
       console.error('Error creating purchase order:', error);

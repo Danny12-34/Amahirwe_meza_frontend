@@ -57,11 +57,11 @@ const ProcurementDashboard = () => {
           supplyOrdersRes,
           contractsRes
         ] = await Promise.all([
-          axios.get('amahirwemezabackend-production.up.railway.app/api/v1/suppliers/count'),
-          axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/count'),
-          axios.get('amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/count'),
-          axios.get('amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/count'),
-          axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll')
+          axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/suppliers/count'),
+          axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/count'),
+          axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/purchase-orders/count'),
+          axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/count'),
+          axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll')
         ]);
 
         setSummary([

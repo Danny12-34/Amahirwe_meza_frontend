@@ -20,7 +20,7 @@ const CreateSupplyOrder = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/create', form);
+      await axios.post('https://amahirwemezabackend-production.up.railway.app/api/v1/supply-orders/create', form);
       navigate('/supply-orders');
     } catch (error) {
       console.error('Error creating supply order:', error);

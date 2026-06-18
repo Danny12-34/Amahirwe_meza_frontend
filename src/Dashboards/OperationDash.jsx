@@ -19,7 +19,7 @@ const ProcurementsDash = () => {
 
   const fetchContracts = async () => {
     try {
-      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll');
+      const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/v1/contracts/getAll');
       const contractData = Array.isArray(res.data.data) ? res.data.data : [];
 
       setContracts(contractData);

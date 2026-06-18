@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import FieldChiefNavBar from '../Component/FieldChiefNavBar';
 
-const API_BASE = 'amahirwemezabackend-production.up.railway.app/api/Trash';
+const API_BASE = 'https://amahirwemezabackend-production.up.railway.app/api/Trash';
 const PAGE_SIZE = 10;
 
 export default function DocumentManager() {

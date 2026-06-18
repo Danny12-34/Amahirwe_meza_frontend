@@ -13,7 +13,7 @@ const EstimationList = () => {
 
   const fetchEstimations = async () => {
     try {
-      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/estimation/all');
+      const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/estimation/all');
       setEstimations(res.data || []);
     } catch (error) {
       console.error('Error fetching estimations:', error);

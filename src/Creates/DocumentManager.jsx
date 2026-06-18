@@ -20,7 +20,7 @@ export default function DocumentManager() {
 
   const fetchDocuments = async () => {
     try {
-      const res = await axios.get('amahirwemezabackend-production.up.railway.app/api/comewith/getAll');
+      const res = await axios.get('https://amahirwemezabackend-production.up.railway.app/api/comewith/getAll');
       setDocuments(res.data);
     } catch (error) {
       console.error('Failed to fetch documents', error);
