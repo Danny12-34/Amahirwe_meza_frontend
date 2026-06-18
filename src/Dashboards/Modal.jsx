@@ -58,7 +58,7 @@ function Modal({ children, onClose }) {
 }
 
 export default function AdminPanel() {
-  const API_BASE = 'amahirwemezabackend-production.up.railway.app/api/v1/users';
+  const API_BASE = 'https://amahirwemezabackend-production.up.railway.app/api/v1/users';
 
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);

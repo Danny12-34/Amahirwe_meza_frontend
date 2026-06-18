@@ -65,7 +65,7 @@ function Modal({ children, onClose }) {
 
 // ================= MAIN DASHBOARD =================
 export default function AdminDashboard() {
-  const API_BASE = "amahirwemezabackend-production.up.railway.app/api/v1/users";
+  const API_BASE = "https://amahirwemezabackend-production.up.railway.app/api/v1/users";
 
   const [users, setUsers] = useState([]);
   const [hovered, setHovered] = useState(null);
